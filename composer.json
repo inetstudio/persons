@@ -1,0 +1,20 @@
+{
+    "name": "inetstudio/experts",
+    "description": "Package for experts",
+    "homepage": "https://github.com/inetstudio/experts",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Konstantin Bukin",
+        "email": "bukin@inetstudio.ru"
+      }
+    ],
+    "require": {
+      "inetstudio/admin-panel": "1.4.*"
+    },
+    "autoload": {
+      "psr-4": {
+        "InetStudio\\Experts\\": "src/"
+      }
+    }
+}
