@@ -12,6 +12,39 @@ use Venturecraft\Revisionable\RevisionableTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
+/**
+ * InetStudio\Experts\Models\ExpertModel
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $slug
+ * @property string|null $post
+ * @property string|null $description
+ * @property string|null $content
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property-read \Illuminate\Contracts\Routing\UrlGenerator|string $href
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Phoenix\EloquentMeta\Meta[] $meta
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
+ * @method static bool|null forceDelete()
+ * @method static \Illuminate\Database\Query\Builder|\InetStudio\Experts\Models\ExpertModel onlyTrashed()
+ * @method static bool|null restore()
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel wherePost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\InetStudio\Experts\Models\ExpertModel withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\InetStudio\Experts\Models\ExpertModel withoutTrashed()
+ * @mixin \Eloquent
+ */
 class ExpertModel extends Model implements HasMediaConversions
 {
     use MetaTrait;
@@ -59,7 +92,7 @@ class ExpertModel extends Model implements HasMediaConversions
     {
         return [
             'slug' => [
-                'source' => 'title',
+                'source' => 'name',
                 'unique' => true,
             ],
         ];
@@ -97,6 +130,9 @@ class ExpertModel extends Model implements HasMediaConversions
         return url(self::HREF . (!empty($this->slug) ? $this->slug : $this->id));
     }
 
+    /**
+     * Регистрируем преобразования изображений.
+     */
     public function registerMediaConversions()
     {
         $quality = (config('experts.images.quality')) ? config('experts.images.quality') : 75;
@@ -105,11 +141,17 @@ class ExpertModel extends Model implements HasMediaConversions
             foreach (config('experts.images.conversions') as $collection => $image) {
                 foreach ($image as $crop) {
                     foreach ($crop as $conversion) {
-                        $this->addMediaConversion($conversion['name'])
-                            ->quality($quality)
-                            ->width($conversion['size']['width'])
-                            ->height($conversion['size']['height'])
-                            ->performOnCollections($collection);
+                        $imageConversion = $this->addMediaConversion($conversion['name'])->quality($quality);
+
+                        if (isset($conversion['size']['width'])) {
+                            $imageConversion->width($conversion['size']['width']);
+                        }
+
+                        if (isset($conversion['size']['height'])) {
+                            $imageConversion->height($conversion['size']['height']);
+                        }
+
+                        $imageConversion->performOnCollections($collection);
                     }
                 }
             }

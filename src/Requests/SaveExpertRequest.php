@@ -71,9 +71,9 @@ class SaveExpertRequest extends FormRequest
             'og_image.crop.default' => 'nullable|json|crop_size:968,475,fixed',
 
             'name' => 'required|max:255',
-            'slug' => 'required|alpha_dash|max:255|unique:ingredients,slug,'.$request->get('ingredient_id'),
+            'slug' => 'required|alpha_dash|max:255|unique:experts,slug,'.$request->get('expert_id'),
 
-            'preview.crop.default' => 'required|json|crop_size:300,280,min',
+            'preview.crop.default' => 'required|json|crop_size:86,86,min',
             'preview.description' => 'max:255',
             'preview.copyright' => 'max:255',
             'preview.alt' => 'required|max:255',
