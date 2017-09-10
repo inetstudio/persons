@@ -83,8 +83,10 @@ class ExpertModel extends Model implements HasMediaConversions
         'deleted_at',
     ];
 
+    protected $revisionCreationsEnabled = true;
+
     /**
-     * Return the sluggable configuration array for this model.
+     * Возвращаем конфиг для генерации slug модели.
      *
      * @return array
      */
@@ -97,8 +99,6 @@ class ExpertModel extends Model implements HasMediaConversions
             ],
         ];
     }
-
-    protected $revisionCreationsEnabled = true;
 
     /**
      * Правила для транслита.
