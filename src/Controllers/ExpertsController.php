@@ -331,10 +331,29 @@ class ExpertsController extends Controller
      */
     public function getSuggestions(Request $request)
     {
-        $search = $request->get('q');
-        $data = [];
+        if ($request->has('type') and $request->get('type') == 'autocomplete') {
+            $search = $request->get('query');
+            $data['suggestions'] = [];
 
-        $data['items'] = ExpertModel::select(['id', 'name'])->where('name', 'LIKE', '%'.$search.'%')->get()->toArray();
+            $experts = ExpertModel::where('name', 'LIKE', '%'.$search.'%')->get();
+
+            foreach ($experts as $expert) {
+                $data['suggestions'][] = [
+                    'value' => $expert->name,
+                    'data' => [
+                        'id' => $expert->id,
+                        'name' => $expert->name,
+                        'href' => url($expert->href),
+                        'preview' => ($expert->getFirstMedia('preview')) ? url($expert->getFirstMedia('preview')->getUrl('preview_default')) : '',
+                    ]
+                ];
+            }
+        } else {
+            $search = $request->get('q');
+            $data = [];
+
+            $data['items'] = ExpertModel::select(['id', 'name'])->where('name', 'LIKE', '%'.$search.'%')->get()->toArray();
+        }
 
         return response()->json($data);
     }
