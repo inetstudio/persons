@@ -195,6 +195,8 @@ class ExpertsController extends Controller
             foreach ($request->get('meta') as $key => $value) {
                 $item->updateMeta($key, $value);
             }
+
+            \Event::fire('inetstudio.seo.cache.clear', $item);
         }
     }
 
@@ -242,6 +244,9 @@ class ExpertsController extends Controller
                         $cropData = json_decode($cropJSON, true);
 
                         foreach (config('experts.images.conversions.'.$name.'.'.$key) as $conversion) {
+
+                            \Event::fire('inetstudio.images.cache.clear', $conversion['name'].'_'.md5(get_class($item).$item->id));
+
                             $manipulations[$conversion['name']] = [
                                 'manualCrop' => implode(',', [
                                     round($cropData['width']),
