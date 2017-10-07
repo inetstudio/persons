@@ -10,11 +10,18 @@
       }
     ],
     "require": {
-      "inetstudio/admin-panel": "1.4.*"
+      "inetstudio/admin-panel": "1.5.*"
     },
     "autoload": {
       "psr-4": {
         "InetStudio\\Experts\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "InetStudio\\Experts\\ExpertsServiceProvider"
+        ]
       }
     }
 }

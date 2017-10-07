@@ -180,7 +180,7 @@ class ExpertsController extends Controller
      */
     public function getSuggestions(Request $request)
     {
-        if ($request->has('type') and $request->get('type') == 'autocomplete') {
+        if ($request->filled('type') and $request->get('type') == 'autocomplete') {
             $search = $request->get('query');
             $data['suggestions'] = [];
 
