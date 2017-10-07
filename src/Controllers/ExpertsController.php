@@ -180,6 +180,8 @@ class ExpertsController extends Controller
      */
     public function getSuggestions(Request $request)
     {
+        $data = [];
+
         if ($request->filled('type') and $request->get('type') == 'autocomplete') {
             $search = $request->get('query');
             $data['suggestions'] = [];
@@ -199,7 +201,6 @@ class ExpertsController extends Controller
             }
         } else {
             $search = $request->get('q');
-            $data = [];
 
             $data['items'] = ExpertModel::select(['id', 'name'])->where('name', 'LIKE', '%'.$search.'%')->get()->toArray();
         }
