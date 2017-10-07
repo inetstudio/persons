@@ -14,7 +14,7 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
- * InetStudio\Experts\Models\ExpertModel
+ * InetStudio\Experts\Models\ExpertModel.
  *
  * @property int $id
  * @property string $name
@@ -128,7 +128,7 @@ class ExpertModel extends Model implements HasMediaConversions
      */
     public function getHrefAttribute()
     {
-        return url(self::HREF . (!empty($this->slug) ? $this->slug : $this->id));
+        return url(self::HREF.(! empty($this->slug) ? $this->slug : $this->id));
     }
 
     /**

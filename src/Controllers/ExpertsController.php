@@ -85,7 +85,6 @@ class ExpertsController extends Controller
     public function edit($id = null)
     {
         if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
-
             return view('admin.module.experts::pages.form', [
                 'item' => $item,
             ]);
@@ -196,7 +195,7 @@ class ExpertsController extends Controller
                         'name' => $expert->name,
                         'href' => url($expert->href),
                         'preview' => ($expert->getFirstMedia('preview')) ? url($expert->getFirstMedia('preview')->getUrl('preview_default')) : '',
-                    ]
+                    ],
                 ];
             }
         } else {

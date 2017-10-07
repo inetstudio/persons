@@ -41,6 +41,5 @@ class ExpertsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
     }
 }
