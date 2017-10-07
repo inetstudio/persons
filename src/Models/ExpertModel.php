@@ -3,6 +3,7 @@
 namespace InetStudio\Experts\Models;
 
 use Cocur\Slugify\Slugify;
+use Spatie\MediaLibrary\Media;
 use Phoenix\EloquentMeta\MetaTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -132,8 +133,10 @@ class ExpertModel extends Model implements HasMediaConversions
 
     /**
      * Регистрируем преобразования изображений.
+     *
+     * @param Media|null $media
      */
-    public function registerMediaConversions()
+    public function registerMediaConversions(Media $media = null)
     {
         $quality = (config('experts.images.quality')) ? config('experts.images.quality') : 75;
 

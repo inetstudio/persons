@@ -3,7 +3,7 @@
 namespace InetStudio\Experts\Controllers;
 
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use InetStudio\Experts\Models\ExpertModel;
@@ -28,10 +28,10 @@ class ExpertsController extends Controller
     /**
      * Список экспертов.
      *
-     * @param Datatables $dataTable
+     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Datatables $dataTable)
+    public function index(DataTables $dataTable)
     {
         $table = $this->generateTable($dataTable, 'experts', 'index');
 
@@ -47,9 +47,9 @@ class ExpertsController extends Controller
     {
         $items = ExpertModel::query();
 
-        return Datatables::of($items)
+        return DataTables::of($items)
             ->setTransformer(new ExpertTransformer)
-            ->escapeColumns(['actions'])
+            ->rawColumns(['actions'])
             ->make();
     }
 
