@@ -3,6 +3,7 @@
 namespace InetStudio\Experts\Models;
 
 use Cocur\Slugify\Slugify;
+use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\Media;
 use Phoenix\EloquentMeta\MetaTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -50,6 +51,7 @@ class ExpertModel extends Model implements HasMediaConversions
 {
     use MetaTrait;
     use Sluggable;
+    use Searchable;
     use SoftDeletes;
     use HasMediaTrait;
     use RevisionableTrait;
@@ -85,6 +87,18 @@ class ExpertModel extends Model implements HasMediaConversions
     ];
 
     protected $revisionCreationsEnabled = true;
+
+    /**
+     * Настройка полей для поиска.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $arr = array_only($this->toArray(), ['id', 'name', 'post', 'description', 'content']);
+
+        return $arr;
+    }
 
     /**
      * Возвращаем конфиг для генерации slug модели.
