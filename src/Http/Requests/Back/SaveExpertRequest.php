@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\Experts\Requests;
+namespace InetStudio\Experts\Http\Requests\Back;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
@@ -12,7 +12,7 @@ class SaveExpertRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class SaveExpertRequest extends FormRequest
      *
      * @return array
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'meta.title.max' => 'Поле «Title» не должно превышать 255 символов',
@@ -59,7 +59,7 @@ class SaveExpertRequest extends FormRequest
      * @param Request $request
      * @return array
      */
-    public function rules(Request $request)
+    public function rules(Request $request): array
     {
         return [
             'meta.title' => 'max:255',

@@ -1,18 +1,21 @@
 <?php
 
-namespace InetStudio\Experts\Controllers;
+namespace InetStudio\Experts\Http\Controllers\Back;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use InetStudio\Experts\Models\ExpertModel;
 use InetStudio\AdminPanel\Traits\DatatablesTrait;
-use InetStudio\Experts\Requests\SaveExpertRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use InetStudio\Experts\Transformers\ExpertTransformer;
 use InetStudio\AdminPanel\Traits\MetaManipulationsTrait;
 use InetStudio\AdminPanel\Traits\ImagesManipulationsTrait;
+use InetStudio\Experts\Http\Requests\Back\SaveExpertRequest;
 
 /**
  * Контроллер для управления экспертами.
@@ -31,7 +34,7 @@ class ExpertsController extends Controller
      * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(DataTables $dataTable)
+    public function index(DataTables $dataTable): View
     {
         $table = $this->generateTable($dataTable, 'experts', 'index');
 
@@ -39,7 +42,7 @@ class ExpertsController extends Controller
     }
 
     /**
-     * Datatables serverside.
+     * DataTables ServerSide.
      *
      * @return mixed
      */
@@ -58,7 +61,7 @@ class ExpertsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.module.experts::pages.form', [
             'item' => new ExpertModel(),
@@ -71,7 +74,7 @@ class ExpertsController extends Controller
      * @param SaveExpertRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(SaveExpertRequest $request)
+    public function store(SaveExpertRequest $request): RedirectResponse
     {
         return $this->save($request);
     }
@@ -82,7 +85,7 @@ class ExpertsController extends Controller
      * @param null $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id = null)
+    public function edit($id = null): View
     {
         if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
             return view('admin.module.experts::pages.form', [
@@ -100,7 +103,7 @@ class ExpertsController extends Controller
      * @param null $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(SaveExpertRequest $request, $id = null)
+    public function update(SaveExpertRequest $request, $id = null): RedirectResponse
     {
         return $this->save($request, $id);
     }
@@ -112,7 +115,7 @@ class ExpertsController extends Controller
      * @param null $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    private function save($request, $id = null)
+    private function save($request, $id = null): RedirectResponse
     {
         if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
             $action = 'отредактирован';
@@ -142,7 +145,7 @@ class ExpertsController extends Controller
      * @param null $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id = null)
+    public function destroy($id = null): JsonResponse
     {
         if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
             $item->delete();
@@ -163,7 +166,7 @@ class ExpertsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSlug(Request $request)
+    public function getSlug(Request $request): JsonResponse
     {
         $name = $request->get('name');
         $slug = SlugService::createSlug(ExpertModel::class, 'slug', $name);
@@ -172,12 +175,12 @@ class ExpertsController extends Controller
     }
 
     /**
-     * Возвращаем ингредиенты для поля.
+     * Возвращаем экспертов для поля.
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getSuggestions(Request $request)
+    public function getSuggestions(Request $request): JsonResponse
     {
         $data = [];
 
@@ -193,6 +196,7 @@ class ExpertsController extends Controller
                     'data' => [
                         'id' => $expert->id,
                         'name' => $expert->name,
+                        'post' => $expert->post,
                         'href' => url($expert->href),
                         'preview' => ($expert->getFirstMedia('preview')) ? url($expert->getFirstMedia('preview')->getUrl('preview_default')) : '',
                     ],

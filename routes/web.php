@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'InetStudio\Experts\Controllers'], function () {
+Route::group(['namespace' => 'InetStudio\Experts\Http\Controllers\Back'], function () {
     Route::group(['middleware' => 'web', 'prefix' => 'back'], function () {
         Route::group(['middleware' => 'back.auth'], function () {
             Route::post('experts/slug', 'ExpertsController@getSlug')->name('back.experts.getSlug');

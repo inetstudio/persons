@@ -10,6 +10,7 @@
       }
     ],
     "require": {
+      "php" : "^7.1",
       "inetstudio/admin-panel": "1.5.*"
     },
     "autoload": {
@@ -20,7 +21,7 @@
     "extra": {
       "laravel": {
         "providers": [
-          "InetStudio\\Experts\\ExpertsServiceProvider"
+          "InetStudio\\Experts\\Providers\\ExpertsServiceProvider"
         ]
       }
     }
