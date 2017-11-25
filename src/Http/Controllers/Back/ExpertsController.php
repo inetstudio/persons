@@ -10,12 +10,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use InetStudio\Experts\Models\ExpertModel;
-use InetStudio\AdminPanel\Traits\DatatablesTrait;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use InetStudio\Experts\Transformers\ExpertTransformer;
-use InetStudio\AdminPanel\Traits\MetaManipulationsTrait;
-use InetStudio\AdminPanel\Traits\ImagesManipulationsTrait;
 use InetStudio\Experts\Http\Requests\Back\SaveExpertRequest;
+use InetStudio\AdminPanel\Http\Controllers\Back\Traits\DatatablesTrait;
+use InetStudio\AdminPanel\Http\Controllers\Back\Traits\MetaManipulationsTrait;
+use InetStudio\AdminPanel\Http\Controllers\Back\Traits\ImagesManipulationsTrait;
 
 /**
  * Контроллер для управления экспертами.
