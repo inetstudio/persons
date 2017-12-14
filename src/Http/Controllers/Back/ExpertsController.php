@@ -38,7 +38,7 @@ class ExpertsController extends Controller
     {
         $table = $this->generateTable($dataTable, 'experts', 'index');
 
-        return view('admin.module.experts::pages.index', compact('table'));
+        return view('admin.module.experts::back.pages.index', compact('table'));
     }
 
     /**
@@ -63,7 +63,7 @@ class ExpertsController extends Controller
      */
     public function create(): View
     {
-        return view('admin.module.experts::pages.form', [
+        return view('admin.module.experts::back.pages.form', [
             'item' => new ExpertModel(),
         ]);
     }
@@ -88,7 +88,7 @@ class ExpertsController extends Controller
     public function edit($id = null): View
     {
         if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
-            return view('admin.module.experts::pages.form', [
+            return view('admin.module.experts::back.pages.form', [
                 'item' => $item,
             ]);
         } else {

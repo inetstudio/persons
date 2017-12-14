@@ -20,7 +20,7 @@ class ExpertTransformer extends TransformerAbstract
             'name' => $expert->name,
             'created_at' => (string) $expert->created_at,
             'updated_at' => (string) $expert->updated_at,
-            'actions' => view('admin.module.experts::partials.datatables.actions', [
+            'actions' => view('admin.module.experts::back.partials.datatables.actions', [
                 'id' => $expert->id,
             ])->render(),
         ];

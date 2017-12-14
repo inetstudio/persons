@@ -9,7 +9,7 @@
 @section('content')
 
     @push('breadcrumbs')
-        @include('admin.module.experts::partials.breadcrumbs')
+        @include('admin.module.experts::back.partials.breadcrumbs')
         <li>
             <a href="{{ route('back.experts.index') }}">Эксперты</a>
         </li>
