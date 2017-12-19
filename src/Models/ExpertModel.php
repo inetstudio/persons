@@ -5,13 +5,14 @@ namespace InetStudio\Experts\Models;
 use Cocur\Slugify\Slugify;
 use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\Media;
-use Phoenix\EloquentMeta\MetaTrait;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use InetStudio\Meta\Models\Traits\Metable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use InetStudio\Meta\Contracts\Models\Traits\MetableContract;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 /**
@@ -47,9 +48,9 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
  * @method static \Illuminate\Database\Query\Builder|\InetStudio\Experts\Models\ExpertModel withoutTrashed()
  * @mixin \Eloquent
  */
-class ExpertModel extends Model implements HasMediaConversions
+class ExpertModel extends Model implements MetableContract, HasMediaConversions
 {
-    use MetaTrait;
+    use Metable;
     use Sluggable;
     use Searchable;
     use SoftDeletes;

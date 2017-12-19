@@ -14,13 +14,14 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 use InetStudio\Experts\Transformers\ExpertTransformer;
 use InetStudio\Experts\Http\Requests\Back\SaveExpertRequest;
 use InetStudio\AdminPanel\Http\Controllers\Back\Traits\DatatablesTrait;
-use InetStudio\AdminPanel\Http\Controllers\Back\Traits\MetaManipulationsTrait;
+use InetStudio\Meta\Http\Controllers\Back\Traits\MetaManipulationsTrait;
 use InetStudio\AdminPanel\Http\Controllers\Back\Traits\ImagesManipulationsTrait;
 
 /**
  * Контроллер для управления экспертами.
  *
- * Class ContestByTagStatusesController
+ * Class ExpertsController
+ * @package InetStudio\Experts\Http\Controllers\Back
  */
 class ExpertsController extends Controller
 {
@@ -33,6 +34,7 @@ class ExpertsController extends Controller
      *
      * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Exception
      */
     public function index(DataTables $dataTable): View
     {
@@ -45,6 +47,7 @@ class ExpertsController extends Controller
      * DataTables ServerSide.
      *
      * @return mixed
+     * @throws \Exception
      */
     public function data()
     {
@@ -136,7 +139,9 @@ class ExpertsController extends Controller
 
         Session::flash('success', 'Эксперт «'.$item->name.'» успешно '.$action);
 
-        return redirect()->to(route('back.experts.edit', $item->fresh()->id));
+        return response()->redirectToRoute('back.experts.edit', [
+            $item->fresh()->id,
+        ]);
     }
 
     /**
