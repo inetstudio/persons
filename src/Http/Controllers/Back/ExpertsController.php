@@ -32,13 +32,12 @@ class ExpertsController extends Controller
     /**
      * Список экспертов.
      *
-     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function index(DataTables $dataTable): View
+    public function index(): View
     {
-        $table = $this->generateTable($dataTable, 'experts', 'index');
+        $table = $this->generateTable('experts', 'index');
 
         return view('admin.module.experts::back.pages.index', compact('table'));
     }
