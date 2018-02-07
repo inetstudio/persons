@@ -1,6 +1,6 @@
 <?php
 
-namespace Inetstudio\Experts\Transformers;
+namespace InetStudio\Experts\Transformers;
 
 use League\Fractal\TransformerAbstract;
 use InetStudio\Experts\Models\ExpertModel;

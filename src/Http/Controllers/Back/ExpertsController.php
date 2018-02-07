@@ -186,30 +186,38 @@ class ExpertsController extends Controller
      */
     public function getSuggestions(Request $request): JsonResponse
     {
-        $data = [];
+        $search = $request->get('q');
+
+        $items = ExpertModel::select(['id', 'name', 'post', 'slug'])->where('name', 'LIKE', '%'.$search.'%')->get();
 
         if ($request->filled('type') and $request->get('type') == 'autocomplete') {
-            $search = $request->get('query');
-            $data['suggestions'] = [];
+            $type = get_class(new ExpertModel());
 
-            $experts = ExpertModel::where('name', 'LIKE', '%'.$search.'%')->get();
-
-            foreach ($experts as $expert) {
-                $data['suggestions'][] = [
-                    'value' => $expert->name,
-                    'data' => [
-                        'id' => $expert->id,
-                        'name' => $expert->name,
-                        'post' => $expert->post,
-                        'href' => url($expert->href),
-                        'preview' => ($expert->getFirstMedia('preview')) ? url($expert->getFirstMedia('preview')->getUrl('preview_default')) : '',
+            $data = $items->mapToGroups(function ($item) use ($type) {
+                return [
+                    'suggestions' => [
+                        'value' => $item->name,
+                        'data' => [
+                            'id' => $item->id,
+                            'type' => $type,
+                            'name' => $item->name,
+                            'post' => $item->post,
+                            'path' => parse_url($item->href, PHP_URL_PATH),
+                            'href' => $item->href,
+                            'preview' => ($item->getFirstMedia('preview')) ? url($item->getFirstMedia('preview')->getUrl('preview_default')) : '',
+                        ],
                     ],
                 ];
-            }
+            });
         } else {
-            $search = $request->get('q');
-
-            $data['items'] = ExpertModel::select(['id', 'name'])->where('name', 'LIKE', '%'.$search.'%')->get()->toArray();
+            $data = $items->mapToGroups(function ($item) {
+                return [
+                    'items' => [
+                        'id' => $item->id,
+                        'name' => $item->name,
+                    ],
+                ];
+            });
         }
 
         return response()->json($data);
