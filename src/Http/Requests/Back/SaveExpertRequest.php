@@ -33,7 +33,7 @@ class SaveExpertRequest extends FormRequest implements SaveExpertRequestContract
 
             'meta.og:title.max' => 'Поле «og:itle» не должно превышать 255 символов',
             'meta.og:description.max' => 'Поле «og:description» не должно превышать 255 символов',
-            
+
             'og_image.crop.default.json' => 'Область отображения должна быть представлена в виде JSON',
 
             'name.required' => 'Поле «ФИО» обязательно для заполнения',
@@ -70,7 +70,7 @@ class SaveExpertRequest extends FormRequest implements SaveExpertRequestContract
 
             'og_image.crop.default' => [
                 'nullable', 'json',
-                new CropSize(968,475,'min', ''),
+                new CropSize(968, 475, 'min', ''),
             ],
 
             'name' => 'required|max:255',
@@ -78,7 +78,7 @@ class SaveExpertRequest extends FormRequest implements SaveExpertRequestContract
 
             'preview.crop.default' => [
                 'nullable', 'json',
-                new CropSize(86,86,'min', ''),
+                new CropSize(86, 86, 'min', ''),
             ],
             'preview.description' => 'max:255',
             'preview.copyright' => 'max:255',

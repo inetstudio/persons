@@ -146,5 +146,5 @@ class ExpertsServiceProvider extends ServiceProvider
         // Transformers
         $this->app->bind('InetStudio\Experts\Contracts\Transformers\Back\ExpertTransformerContract', 'InetStudio\Experts\Transformers\Back\ExpertTransformer');
         $this->app->bind('InetStudio\Experts\Contracts\Transformers\Back\SuggestionTransformerContract', 'InetStudio\Experts\Transformers\Back\SuggestionTransformer');
-    }    
+    }
 }

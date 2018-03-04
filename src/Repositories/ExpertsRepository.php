@@ -4,8 +4,8 @@ namespace InetStudio\Experts\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use InetStudio\Experts\Contracts\Models\ExpertModelContract;
-use InetStudio\Experts\Contracts\Repositories\ExpertsRepositoryContract;
 use InetStudio\Categories\Repositories\Traits\CategoriesRepositoryTrait;
+use InetStudio\Experts\Contracts\Repositories\ExpertsRepositoryContract;
 use InetStudio\Experts\Contracts\Http\Requests\Back\SaveExpertRequestContract;
 
 /**
