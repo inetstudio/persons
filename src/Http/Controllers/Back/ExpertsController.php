@@ -2,224 +2,134 @@
 
 namespace InetStudio\Experts\Http\Controllers\Back;
 
-use Illuminate\View\View;
-use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
-use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Session;
-use InetStudio\Experts\Models\ExpertModel;
-use Cviebrock\EloquentSluggable\Services\SlugService;
-use InetStudio\Experts\Transformers\ExpertTransformer;
-use InetStudio\Experts\Http\Requests\Back\SaveExpertRequest;
-use InetStudio\AdminPanel\Http\Controllers\Back\Traits\DatatablesTrait;
-use InetStudio\Meta\Http\Controllers\Back\Traits\MetaManipulationsTrait;
-use InetStudio\AdminPanel\Http\Controllers\Back\Traits\ImagesManipulationsTrait;
+use InetStudio\Experts\Contracts\Http\Requests\Back\SaveExpertRequestContract;
+use InetStudio\Experts\Contracts\Http\Controllers\Back\ExpertsControllerContract;
+use InetStudio\Experts\Contracts\Http\Responses\Back\Experts\FormResponseContract;
+use InetStudio\Experts\Contracts\Http\Responses\Back\Experts\SaveResponseContract;
+use InetStudio\Experts\Contracts\Http\Responses\Back\Experts\IndexResponseContract;
+use InetStudio\Experts\Contracts\Http\Responses\Back\Experts\DestroyResponseContract;
 
 /**
- * Контроллер для управления экспертами.
- *
- * Class ExpertsController
- * @package InetStudio\Experts\Http\Controllers\Back
+ * Class ExpertsController.
  */
-class ExpertsController extends Controller
+class ExpertsController extends Controller implements ExpertsControllerContract
 {
-    use DatatablesTrait;
-    use MetaManipulationsTrait;
-    use ImagesManipulationsTrait;
+    /**
+     * Используемые сервисы.
+     *
+     * @var array
+     */
+    private $services;
 
     /**
-     * Список экспертов.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Exception
+     * ExpertsController constructor.
      */
-    public function index(): View
+    public function __construct()
     {
-        $table = $this->generateTable('experts', 'index');
-
-        return view('admin.module.experts::back.pages.index', compact('table'));
+        $this->services['experts'] = app()->make('InetStudio\Experts\Contracts\Services\Back\ExpertsServiceContract');
+        $this->services['dataTables'] = app()->make('InetStudio\Experts\Contracts\Services\Back\ExpertsDataTableServiceContract');
     }
 
     /**
-     * DataTables ServerSide.
+     * Список объектов.
      *
-     * @return mixed
-     * @throws \Exception
+     * @return IndexResponseContract
      */
-    public function data()
+    public function index(): IndexResponseContract
     {
-        $items = ExpertModel::query();
+        $table = $this->services['dataTables']->html();
 
-        return DataTables::of($items)
-            ->setTransformer(new ExpertTransformer)
-            ->rawColumns(['actions'])
-            ->make();
-    }
-
-    /**
-     * Добавление эксперта.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function create(): View
-    {
-        return view('admin.module.experts::back.pages.form', [
-            'item' => new ExpertModel(),
+        return app()->makeWith('InetStudio\Experts\Contracts\Http\Responses\Back\Experts\IndexResponseContract', [
+            'data' => compact('table'),
         ]);
     }
 
     /**
-     * Создание эксперта.
+     * Добавление объекта.
      *
-     * @param SaveExpertRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return FormResponseContract
      */
-    public function store(SaveExpertRequest $request): RedirectResponse
+    public function create(): FormResponseContract
+    {
+        $item = $this->services['experts']->getExpertObject();
+
+        return app()->makeWith('InetStudio\Experts\Contracts\Http\Responses\Back\Experts\FormResponseContract', [
+            'data' => compact('item'),
+        ]);
+    }
+
+    /**
+     * Создание объекта.
+     *
+     * @param SaveExpertRequestContract $request
+     *
+     * @return SaveResponseContract
+     */
+    public function store(SaveExpertRequestContract $request): SaveResponseContract
     {
         return $this->save($request);
     }
 
     /**
-     * Редактирование эксперта.
+     * Редактирование объекта.
      *
-     * @param null $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param int $id
+     *
+     * @return FormResponseContract
      */
-    public function edit($id = null): View
+    public function edit($id = 0): FormResponseContract
     {
-        if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
-            return view('admin.module.experts::back.pages.form', [
-                'item' => $item,
-            ]);
-        } else {
-            abort(404);
-        }
+        $item = $this->services['experts']->getExpertObject($id);
+
+        return app()->makeWith('InetStudio\Experts\Contracts\Http\Responses\Back\Experts\FormResponseContract', [
+            'data' => compact('item'),
+        ]);
     }
 
     /**
-     * Обновление эксперта.
+     * Обновление объекта.
      *
-     * @param SaveExpertRequest $request
-     * @param null $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param SaveExpertRequestContract $request
+     * @param int $id
+     *
+     * @return SaveResponseContract
      */
-    public function update(SaveExpertRequest $request, $id = null): RedirectResponse
+    public function update(SaveExpertRequestContract $request, int $id = 0): SaveResponseContract
     {
         return $this->save($request, $id);
     }
 
     /**
-     * Сохранение эксперта.
+     * Сохранение объекта.
      *
-     * @param SaveExpertRequest $request
-     * @param null $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param SaveExpertRequestContract $request
+     * @param int $id
+     *
+     * @return SaveResponseContract
      */
-    private function save($request, $id = null): RedirectResponse
+    private function save(SaveExpertRequestContract $request, int $id = 0): SaveResponseContract
     {
-        if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
-            $action = 'отредактирован';
-        } else {
-            $action = 'создан';
-            $item = new ExpertModel();
-        }
+        $item = $this->services['experts']->save($request, $id);
 
-        $item->name = strip_tags($request->get('name'));
-        $item->slug = strip_tags($request->get('slug'));
-        $item->post = strip_tags($request->input('post.text'));
-        $item->description = strip_tags($request->input('description.text'));
-        $item->content = $request->input('content.text');
-        $item->save();
-
-        $this->saveMeta($item, $request);
-        $this->saveImages($item, $request, ['og_image', 'preview', 'content'], 'experts');
-
-        Session::flash('success', 'Эксперт «'.$item->name.'» успешно '.$action);
-
-        return response()->redirectToRoute('back.experts.edit', [
-            $item->fresh()->id,
+        return app()->makeWith('InetStudio\Experts\Contracts\Http\Responses\Back\Experts\SaveResponseContract', [
+            'item' => $item,
         ]);
     }
 
     /**
-     * Удаление эксперта.
+     * Удаление объекта.
      *
-     * @param null $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy($id = null): JsonResponse
-    {
-        if (! is_null($id) && $id > 0 && $item = ExpertModel::find($id)) {
-            $item->delete();
-
-            return response()->json([
-                'success' => true,
-            ]);
-        } else {
-            return response()->json([
-                'success' => false,
-            ]);
-        }
-    }
-
-    /**
-     * Получаем slug для модели по строке.
+     * @param int $id
      *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return DestroyResponseContract
      */
-    public function getSlug(Request $request): JsonResponse
+    public function destroy(int $id = 0): DestroyResponseContract
     {
-        $name = $request->get('name');
-        $slug = SlugService::createSlug(ExpertModel::class, 'slug', $name);
+        $result = $this->services['experts']->destroy($id);
 
-        return response()->json($slug);
-    }
-
-    /**
-     * Возвращаем экспертов для поля.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getSuggestions(Request $request): JsonResponse
-    {
-        $search = $request->get('q');
-
-        $items = ExpertModel::select(['id', 'name', 'post', 'slug'])->where('name', 'LIKE', '%'.$search.'%')->get();
-
-        if ($request->filled('type') and $request->get('type') == 'autocomplete') {
-            $type = get_class(new ExpertModel());
-
-            $data = $items->mapToGroups(function ($item) use ($type) {
-                return [
-                    'suggestions' => [
-                        'value' => $item->name,
-                        'data' => [
-                            'id' => $item->id,
-                            'type' => $type,
-                            'name' => $item->name,
-                            'post' => $item->post,
-                            'path' => parse_url($item->href, PHP_URL_PATH),
-                            'href' => $item->href,
-                            'preview' => ($item->getFirstMedia('preview')) ? url($item->getFirstMedia('preview')->getUrl('preview_default')) : '',
-                        ],
-                    ],
-                ];
-            });
-        } else {
-            $data = $items->mapToGroups(function ($item) {
-                return [
-                    'items' => [
-                        'id' => $item->id,
-                        'name' => $item->name,
-                    ],
-                ];
-            });
-        }
-
-        return response()->json($data);
+        return app()->makeWith('InetStudio\Experts\Contracts\Http\Responses\Back\Experts\DestroyResponseContract', [
+            'result' => ($result === null) ? false : $result,
+        ]);
     }
 }

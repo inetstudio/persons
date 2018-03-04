@@ -4,61 +4,33 @@ namespace InetStudio\Experts\Models;
 
 use Cocur\Slugify\Slugify;
 use Laravel\Scout\Searchable;
-use Spatie\MediaLibrary\Media;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use InetStudio\Meta\Models\Traits\Metable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use InetStudio\Uploads\Models\Traits\HasImages;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
+use InetStudio\Experts\Contracts\Models\ExpertModelContract;
 use InetStudio\Meta\Contracts\Models\Traits\MetableContract;
 use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-/**
- * InetStudio\Experts\Models\ExpertModel.
- *
- * @property int $id
- * @property string $name
- * @property string $slug
- * @property string|null $post
- * @property string|null $description
- * @property string|null $content
- * @property \Carbon\Carbon|null $created_at
- * @property \Carbon\Carbon|null $updated_at
- * @property \Carbon\Carbon|null $deleted_at
- * @property-read \Illuminate\Contracts\Routing\UrlGenerator|string $href
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\MediaLibrary\Media[] $media
- * @property-read \Illuminate\Database\Eloquent\Collection|\Phoenix\EloquentMeta\Meta[] $meta
- * @property-read \Illuminate\Database\Eloquent\Collection|\Venturecraft\Revisionable\Revision[] $revisionHistory
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
- * @method static bool|null forceDelete()
- * @method static \Illuminate\Database\Query\Builder|\InetStudio\Experts\Models\ExpertModel onlyTrashed()
- * @method static bool|null restore()
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel wherePost($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\InetStudio\Experts\Models\ExpertModel whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\InetStudio\Experts\Models\ExpertModel withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\InetStudio\Experts\Models\ExpertModel withoutTrashed()
- * @mixin \Eloquent
- */
-class ExpertModel extends Model implements MetableContract, HasMediaConversions
+class ExpertModel extends Model implements ExpertModelContract, MetableContract, HasMediaConversions
 {
     use Metable;
+    use HasImages;
     use Sluggable;
     use Searchable;
     use SoftDeletes;
-    use HasMediaTrait;
     use RevisionableTrait;
     use SluggableScopeHelpers;
 
     const HREF = '/expert/';
+
+    protected $images = [
+        'config' => 'experts',
+        'model' => 'expert',
+    ];
 
     /**
      * Связанная с моделью таблица.
@@ -144,46 +116,5 @@ class ExpertModel extends Model implements MetableContract, HasMediaConversions
     public function getHrefAttribute()
     {
         return url(self::HREF.(! empty($this->slug) ? $this->slug : $this->id));
-    }
-
-    /**
-     * Регистрируем преобразования изображений.
-     *
-     * @param Media|null $media
-     */
-    public function registerMediaConversions(Media $media = null)
-    {
-        $quality = (config('experts.images.quality')) ? config('experts.images.quality') : 75;
-
-        if (config('experts.images.conversions')) {
-            foreach (config('experts.images.conversions') as $collection => $image) {
-                foreach ($image as $crop) {
-                    foreach ($crop as $conversion) {
-                        $imageConversion = $this->addMediaConversion($conversion['name']);
-
-                        if (isset($conversion['size']['width'])) {
-                            $imageConversion->width($conversion['size']['width']);
-                        }
-
-                        if (isset($conversion['size']['height'])) {
-                            $imageConversion->height($conversion['size']['height']);
-                        }
-
-                        if (isset($conversion['fit']['width']) && isset($conversion['fit']['height'])) {
-                            $imageConversion->fit('max', $conversion['fit']['width'], $conversion['fit']['height']);
-                        }
-
-                        if (isset($conversion['quality'])) {
-                            $imageConversion->quality($conversion['quality']);
-                            $imageConversion->optimize();
-                        } else {
-                            $imageConversion->quality($quality);
-                        }
-
-                        $imageConversion->performOnCollections($collection);
-                    }
-                }
-            }
-        }
     }
 }

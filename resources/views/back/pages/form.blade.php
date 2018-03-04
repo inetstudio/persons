@@ -96,7 +96,8 @@
                                             'title' => 'Фото',
                                         ],
                                         'image' => [
-                                            'src' => isset($previewImageMedia) ? url($previewImageMedia->getUrl()) : '',
+                                            'filepath' => isset($previewImageMedia) ? url($previewImageMedia->getUrl()) : '',
+                                            'filename' => isset($previewImageMedia) ? $previewImageMedia->file_name : '',
                                         ],
                                         'crops' => [
                                             [

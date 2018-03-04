@@ -5,6 +5,9 @@ namespace InetStudio\Experts\Console\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 
+/**
+ * Class SetupCommand.
+ */
 class SetupCommand extends Command
 {
     /**
