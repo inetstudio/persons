@@ -108,7 +108,7 @@ class ExpertsService implements ExpertsServiceContract
      */
     public function getSuggestions(string $search, $type): array
     {
-        $items = $this->repository->searchItemsByField('name', $search);
+        $items = $this->repository->searchItemsByField('name', $search, true)->addSelect(['post'])->get();
 
         $resource = (app()->makeWith('InetStudio\Experts\Contracts\Transformers\Back\SuggestionTransformerContract', [
             'type' => $type,
