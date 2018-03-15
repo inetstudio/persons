@@ -11,7 +11,7 @@
     ],
     "require": {
       "php" : "^7.1",
-      "inetstudio/admin-panel": "1.5.*"
+      "inetstudio/admin-panel": "1.6.*"
     },
     "autoload": {
       "psr-4": {
