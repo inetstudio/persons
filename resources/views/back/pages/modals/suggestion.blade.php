@@ -54,8 +54,3 @@
         </div>
     </div>
 @endpushonce
-
-@pushonce('scripts:autocomplete')
-    <!-- AUTOCOMPLETE -->
-    <script src="{!! asset('admin/js/plugins/autocomplete/jquery.autocomplete.min.js') !!}"></script>
-@endpushonce

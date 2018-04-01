@@ -89,15 +89,6 @@ class SetupCommand extends Command
                 'command' => 'inetstudio:experts:folders',
             ],
             [
-                'description' => 'Publish public',
-                'command' => 'vendor:publish',
-                'params' => [
-                    '--provider' => 'InetStudio\Experts\Providers\ExpertsServiceProvider',
-                    '--tag' => 'public',
-                    '--force' => true,
-                ],
-            ],
-            [
                 'description' => 'Publish config',
                 'command' => 'vendor:publish',
                 'params' => [
