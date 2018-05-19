@@ -1,7 +1,7 @@
 @extends('admin::back.layouts.app')
 
 @php
-    $title = 'Эксперты';
+    $title = 'Персоны';
 @endphp
 
 @section('title', $title)
@@ -9,7 +9,7 @@
 @section('content')
 
     @push('breadcrumbs')
-        @include('admin.module.experts::back.partials.breadcrumbs')
+        @include('admin.module.persons::back.partials.breadcrumbs.index')
     @endpush
 
     <div class="wrapper wrapper-content">
@@ -17,7 +17,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <a href="{{ route('back.experts.create') }}" class="btn btn-sm btn-primary btn-lg">Добавить</a>
+                        <a href="{{ route('back.persons.create') }}" class="btn btn-sm btn-primary btn-lg">Добавить</a>
                     </div>
                     <div class="ibox-content">
                         <div class="table-responsive">
@@ -30,6 +30,6 @@
     </div>
 @endsection
 
-@pushonce('scripts:datatables_experts_index')
+@pushonce('scripts:datatables_persons_index')
     {!! $table->scripts() !!}
 @endpushonce

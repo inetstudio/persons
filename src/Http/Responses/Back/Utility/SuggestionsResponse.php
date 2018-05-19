@@ -1,10 +1,10 @@
 <?php
 
-namespace InetStudio\Experts\Http\Responses\Back\Utility;
+namespace InetStudio\Persons\Http\Responses\Back\Utility;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\Support\Responsable;
-use InetStudio\Experts\Contracts\Http\Responses\Back\Utility\SuggestionsResponseContract;
+use InetStudio\Persons\Contracts\Http\Responses\Back\Utility\SuggestionsResponseContract;
 
 /**
  * Class SuggestionsResponse.

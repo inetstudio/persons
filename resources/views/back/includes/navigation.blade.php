@@ -1,5 +1,5 @@
-<li class="{{ isActiveRoute('back.experts.*') }}">
-    <a href="{{ route('back.experts.index') }}">
-       <i class="fa fa-address-book-o"></i> <span class="nav-label">Эксперты</span>
+<li class="{{ isActiveRoute('back.persons.*') }}">
+    <a href="{{ route('back.persons.index') }}">
+       <i class="fa fa-address-book-o"></i> <span class="nav-label">Персоны</span>
     </a>
 </li>

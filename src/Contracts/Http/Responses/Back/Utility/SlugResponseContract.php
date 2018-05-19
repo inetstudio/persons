@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\Experts\Contracts\Http\Responses\Back\Utility;
+namespace InetStudio\Persons\Contracts\Http\Responses\Back\Utility;
 
 /**
  * Interface SlugResponseContract.

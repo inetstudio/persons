@@ -1,41 +1,41 @@
-@pushonce('modals:choose_expert')
-    <div id="choose_expert_modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal inmodal fade">
+@pushonce('modals:choose_person')
+    <div id="choose_person_modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal inmodal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Закрыть</span></button>
-                    <h1 class="modal-title">Выберите эксперта</h1>
+                    <h1 class="modal-title">Выберите персону</h1>
                 </div>
 
                 <div class="modal-body">
                     <div class="ibox-content form-horizontal">
                         <div class="row">
 
-                            {!! Form::hidden('expert_data', '', [
+                            {!! Form::hidden('person_data', '', [
                                 'class' => 'choose-data',
-                                'id' => 'expert_data',
+                                'id' => 'person_data',
                             ]) !!}
 
-                            {!! Form::string('expert', '', [
+                            {!! Form::string('person', '', [
                                 'label' => [
-                                    'title' => 'Эксперт',
+                                    'title' => 'Персона',
                                 ],
                                 'field' => [
                                     'class' => 'form-control autocomplete',
-                                    'data-search' => route('back.experts.getSuggestions'),
-                                    'data-target' => '#expert_data'
+                                    'data-search' => route('back.persons.getSuggestions'),
+                                    'data-target' => '#person_data'
                                 ],
                             ]) !!}
 
-                            {!! Form::wysiwyg('expert_opinion', '', [
+                            {!! Form::wysiwyg('person_opinion', '', [
                                 'label' => [
                                     'title' => 'Текст',
                                 ],
                                 'field' => [
                                     'class' => 'tinymce-simple',
                                     'type' => 'simple',
-                                    'id' => 'expert_opinion',
+                                    'id' => 'person_opinion',
                                     'cols' => '50',
                                     'rows' => '10',
                                 ],

@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\Experts\Console\Commands;
+namespace InetStudio\Persons\Console\Commands;
 
 use Illuminate\Console\Command;
 
@@ -14,7 +14,7 @@ class CreateFoldersCommand extends Command
      *
      * @var string
      */
-    protected $name = 'inetstudio:experts:folders';
+    protected $name = 'inetstudio:persons:folders';
 
     /**
      * Описание команды.
@@ -31,7 +31,7 @@ class CreateFoldersCommand extends Command
     public function handle(): void
     {
         $folders = [
-            'experts',
+            'persons',
         ];
 
         foreach ($folders as $folder) {

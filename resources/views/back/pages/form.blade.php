@@ -1,7 +1,7 @@
 @extends('admin::back.layouts.app')
 
 @php
-    $title = ($item->id) ? 'Редактирование эксперта' : 'Добавление эксперта';
+    $title = ($item->id) ? 'Редактирование персоны' : 'Добавление персоны';
 @endphp
 
 @section('title', $title)
@@ -9,14 +9,11 @@
 @section('content')
 
     @push('breadcrumbs')
-        @include('admin.module.experts::back.partials.breadcrumbs')
-        <li>
-            <a href="{{ route('back.experts.index') }}">Эксперты</a>
-        </li>
+        @include('admin.module.persons::back.partials.breadcrumbs.form')
     @endpush
 
     <div class="row m-sm">
-        <a class="btn btn-white" href="{{ route('back.experts.index') }}">
+        <a class="btn btn-white" href="{{ route('back.persons.index') }}">
             <i class="fa fa-arrow-left"></i> Вернуться назад
         </a>
         @if ($item->id && $item->href)
@@ -30,13 +27,13 @@
 
         {!! Form::info() !!}
 
-        {!! Form::open(['url' => (!$item->id) ? route('back.experts.store') : route('back.experts.update', [$item->id]), 'id' => 'mainForm', 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal']) !!}
+        {!! Form::open(['url' => (!$item->id) ? route('back.persons.store') : route('back.persons.update', [$item->id]), 'id' => 'mainForm', 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal']) !!}
 
             @if ($item->id)
                 {{ method_field('PUT') }}
             @endif
 
-            {!! Form::hidden('expert_id', (!$item->id) ? '' : $item->id) !!}
+            {!! Form::hidden('person_id', (!$item->id) ? '' : $item->id) !!}
 
             {!! Form::meta('', $item) !!}
 
@@ -54,13 +51,23 @@
                             <div id="collapseMain" class="panel-collapse collapse in" aria-expanded="true">
                                 <div class="panel-body">
 
+                                    {!! Form::classifiers('', $item, [
+                                        'label' => [
+                                            'title' => 'Тип персоны',
+                                        ],
+                                        'field' => [
+                                            'placeholder' => 'Выберите типы персоны',
+                                            'type' => 'Тип персоны',
+                                        ],
+                                    ]) !!}
+
                                     {!! Form::string('name', $item->name, [
                                         'label' => [
                                             'title' => 'ФИО',
                                         ],
                                         'field' => [
                                             'class' => 'form-control slugify',
-                                            'data-slug-url' => route('back.experts.getSlug'),
+                                            'data-slug-url' => route('back.persons.getSlug'),
                                             'data-slug-target' => 'slug',
                                         ],
                                     ]) !!}
@@ -71,7 +78,7 @@
                                         ],
                                         'field' => [
                                             'class' => 'form-control slugify',
-                                            'data-slug-url' => route('back.experts.getSlug'),
+                                            'data-slug-url' => route('back.persons.getSlug'),
                                             'data-slug-target' => 'slug',
                                         ],
                                     ]) !!}
@@ -178,7 +185,7 @@
                 </div>
             </div>
 
-            {!! Form::buttons('', '', ['back' => 'back.experts.index']) !!}
+            {!! Form::buttons('', '', ['back' => 'back.persons.index']) !!}
 
         {!! Form::close()!!}
     </div>

@@ -1,11 +1,11 @@
 <?php
 
-namespace InetStudio\Experts\Transformers\Back;
+namespace InetStudio\Persons\Transformers\Back;
 
 use League\Fractal\TransformerAbstract;
-use InetStudio\Experts\Contracts\Models\ExpertModelContract;
+use InetStudio\Persons\Contracts\Models\PersonModelContract;
 use League\Fractal\Resource\Collection as FractalCollection;
-use InetStudio\Experts\Contracts\Transformers\Back\SuggestionTransformerContract;
+use InetStudio\Persons\Contracts\Transformers\Back\SuggestionTransformerContract;
 
 /**
  * Class SuggestionTransformer.
@@ -18,7 +18,7 @@ class SuggestionTransformer extends TransformerAbstract implements SuggestionTra
     private $type;
 
     /**
-     * ExpertsSiteMapTransformer constructor.
+     * PersonsSiteMapTransformer constructor.
      *
      * @param $type
      */
@@ -30,13 +30,13 @@ class SuggestionTransformer extends TransformerAbstract implements SuggestionTra
     /**
      * Подготовка данных для отображения в выпадающих списках.
      *
-     * @param ExpertModelContract $item
+     * @param PersonModelContract $item
      *
      * @return array
      *
      * @throws \Throwable
      */
-    public function transform(ExpertModelContract $item): array
+    public function transform(PersonModelContract $item): array
     {
         if ($this->type && $this->type == 'autocomplete') {
             $modelClass = get_class($item);

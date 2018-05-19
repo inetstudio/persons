@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\Experts\Console\Commands;
+namespace InetStudio\Persons\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
@@ -15,14 +15,14 @@ class SetupCommand extends Command
      *
      * @var string
      */
-    protected $name = 'inetstudio:experts:setup';
+    protected $name = 'inetstudio:persons:setup';
 
     /**
      * Описание команды.
      *
      * @var string
      */
-    protected $description = 'Setup experts package';
+    protected $description = 'Setup persons package';
 
     /**
      * Список дополнительных команд.
@@ -74,7 +74,7 @@ class SetupCommand extends Command
                 'description' => 'Publish migrations',
                 'command' => 'vendor:publish',
                 'params' => [
-                    '--provider' => 'InetStudio\Experts\Providers\ExpertsServiceProvider',
+                    '--provider' => 'InetStudio\Persons\Providers\PersonsServiceProvider',
                     '--tag' => 'migrations',
                 ],
             ],
@@ -86,13 +86,13 @@ class SetupCommand extends Command
             [
                 'type' => 'artisan',
                 'description' => 'Create folders',
-                'command' => 'inetstudio:experts:folders',
+                'command' => 'inetstudio:persons:folders',
             ],
             [
                 'description' => 'Publish config',
                 'command' => 'vendor:publish',
                 'params' => [
-                    '--provider' => 'InetStudio\Experts\Providers\ExpertsServiceProvider',
+                    '--provider' => 'InetStudio\Persons\Providers\PersonsServiceProvider',
                     '--tag' => 'config',
                 ],
             ],

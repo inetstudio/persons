@@ -7,10 +7,10 @@ return [
      * добавляет локальные диски для хранения изображений экспертов
      */
 
-    'experts' => [
+    'persons' => [
         'driver' => 'local',
-        'root' => storage_path('app/public/experts/'),
-        'url' => env('APP_URL').'/storage/experts/',
+        'root' => storage_path('app/public/persons/'),
+        'url' => env('APP_URL').'/storage/persons/',
         'visibility' => 'public',
     ],
 

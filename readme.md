@@ -2,7 +2,7 @@
 
 ````
 PUT app_index
-PUT app_index/_mapping/experts
+PUT app_index/_mapping/persons
 {
   "properties": {
     "id": {

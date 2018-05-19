@@ -1,15 +1,15 @@
 <?php
 
 Route::group([
-    'namespace' => 'InetStudio\Experts\Contracts\Http\Controllers\Back',
+    'namespace' => 'InetStudio\Persons\Contracts\Http\Controllers\Back',
     'middleware' => ['web', 'back.auth'],
     'prefix' => 'back',
 ], function () {
-    Route::any('experts/data', 'ExpertsDataControllerContract@data')->name('back.experts.data.index');
-    Route::post('experts/slug', 'ExpertsUtilityControllerContract@getSlug')->name('back.experts.getSlug');
-    Route::post('experts/suggestions', 'ExpertsUtilityControllerContract@getSuggestions')->name('back.experts.getSuggestions');
+    Route::any('persons/data', 'PersonsDataControllerContract@data')->name('back.persons.data.index');
+    Route::post('persons/slug', 'PersonsUtilityControllerContract@getSlug')->name('back.persons.getSlug');
+    Route::post('persons/suggestions', 'PersonsUtilityControllerContract@getSuggestions')->name('back.persons.getSuggestions');
 
-    Route::resource('experts', 'ExpertsControllerContract', ['except' => [
+    Route::resource('persons', 'PersonsControllerContract', ['except' => [
         'show',
     ], 'as' => 'back']);
 });

@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\Experts\Contracts\Transformers\Back;
+namespace InetStudio\Persons\Contracts\Transformers\Back;
 
 /**
  * Interface SuggestionTransformerContract.
