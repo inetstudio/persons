@@ -156,7 +156,7 @@ class PersonsRepository implements PersonsRepositoryContract
     }
 
     /**
-     * 
+     * Получаем объекты по типу.
      *
      * @param string $type
      *
@@ -170,10 +170,12 @@ class PersonsRepository implements PersonsRepositoryContract
             $items = $items->whereHas('classifiers', function ($classifiersQuery) use ($type) {
                 $classifiersQuery->where('classifiers.alias', $type);
             });
+        } else {
+            $items = $items->whereHas('classifiers');
         }
 
         $items = $items->get()->mapToGroups(function ($item, $key) {
-            return [$item->classifiers->first()->value => $item];
+            return [$item->classifiers->first()->alias => $item];
         });
 
         return $items;
