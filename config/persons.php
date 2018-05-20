@@ -22,12 +22,36 @@ return [
                     ],
                 ],
                 'preview' => [
-                    'default' => [
+                    'square' => [
                         [
-                            'name' => 'preview_default',
+                            'name' => 'preview_square_sidebar',
                             'size' => [
                                 'width' => 86,
                                 'height' => 86,
+                            ],
+                        ],
+                        [
+                            'name' => 'preview_square_list',
+                            'size' => [
+                                'width' => 140,
+                                'height' => 140,
+                            ],
+                        ],
+                    ],
+                    '3_2' => [
+                        [
+                            'name' => 'preview_3_2',
+                            'size' => [
+                                'width' => 768,
+                                'height' => 512,
+                            ],
+                        ],
+                        [
+                            'name' => 'preview_3_2_optimize',
+                            'quality' => 65,
+                            'size' => [
+                                'width' => 768,
+                                'height' => 512,
                             ],
                         ],
                     ],
@@ -57,13 +81,24 @@ return [
                 'preview' => [
                     [
                         'title' => 'Квадратная область',
-                        'name' => 'default',
-                        'ratio' => '150/150',
+                        'name' => 'square',
+                        'ratio' => '300/300',
                         'size' => [
-                            'width' => 150,
-                            'height' => 150,
+                            'width' => 300,
+                            'height' => 300,
                             'type' => 'min',
-                            'description' => 'Минимальный размер области — 150x150 пикселей'
+                            'description' => 'Минимальный размер области — 300x300 пикселей'
+                        ],
+                    ],
+                    [
+                        'title' => 'Размер 3х2',
+                        'name' => '3_2',
+                        'ratio' => '3/2',
+                        'size' => [
+                            'width' => 768,
+                            'height' => 512,
+                            'type' => 'min',
+                            'description' => 'Минимальный размер области 3x2 — 768x512 пикселей'
                         ],
                     ],
                 ],
