@@ -71,6 +71,9 @@ class PersonsService implements PersonsServiceContract
         app()->make('InetStudio\Meta\Contracts\Services\Back\MetaServiceContract')
             ->attachToObject($request, $item);
 
+        app()->make('InetStudio\Classifiers\Contracts\Services\Back\ClassifiersServiceContract')
+            ->attachToObject($request, $item);
+
         $images = (config('persons.images.conversions.person')) ? array_keys(config('persons.images.conversions.person')) : [];
         app()->make('InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract')
             ->attachToObject($request, $item, $images, 'persons', 'person');
