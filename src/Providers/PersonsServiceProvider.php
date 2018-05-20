@@ -142,6 +142,7 @@ class PersonsServiceProvider extends ServiceProvider
         $this->app->bind('InetStudio\Persons\Contracts\Services\Back\PersonsDataTableServiceContract', 'InetStudio\Persons\Services\Back\PersonsDataTableService');
         $this->app->bind('InetStudio\Persons\Contracts\Services\Back\PersonsObserverServiceContract', 'InetStudio\Persons\Services\Back\PersonsObserverService');
         $this->app->bind('InetStudio\Persons\Contracts\Services\Back\PersonsServiceContract', 'InetStudio\Persons\Services\Back\PersonsService');
+        $this->app->bind('InetStudio\Persons\Contracts\Services\Front\PersonsServiceContract', 'InetStudio\Persons\Services\Front\PersonsService');
 
         // Transformers
         $this->app->bind('InetStudio\Persons\Contracts\Transformers\Back\PersonTransformerContract', 'InetStudio\Persons\Transformers\Back\PersonTransformer');

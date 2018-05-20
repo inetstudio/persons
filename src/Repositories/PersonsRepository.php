@@ -143,7 +143,7 @@ class PersonsRepository implements PersonsRepositoryContract
      */
     public function getItemBySlug(string $slug, bool $returnBuilder = false)
     {
-        $builder = $this->getItemsQuery(['content'], ['meta', 'media'])->whereSlug($slug);
+        $builder = $this->getItemsQuery(['post', 'description', 'content'], ['meta', 'media'])->whereSlug($slug);
 
         if ($returnBuilder) {
             return $builder;
