@@ -2,7 +2,6 @@
 
 namespace InetStudio\Persons\Repositories;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
 use InetStudio\Categories\Repositories\Traits\CategoriesRepositoryTrait;
@@ -160,7 +159,7 @@ class PersonsRepository implements PersonsRepositoryContract
      *
      * @param string $type
      *
-     * @return Collection
+     * @return array
      */
     public function getItemsByType(string $type = '')
     {
@@ -174,11 +173,15 @@ class PersonsRepository implements PersonsRepositoryContract
             $items = $items->whereHas('classifiers');
         }
 
-        $items = $items->get()->mapToGroups(function ($item, $key) {
-            return [$item->classifiers->first()->alias => $item];
+        $data = [];
+
+        $items->get()->each(function ($item, $key) use (&$data) {
+            foreach ($item->classifiers as $type) {
+                $data[$type->alias][] = $item;
+            }
         });
 
-        return $items;
+        return $data;
     }
 
     /**
