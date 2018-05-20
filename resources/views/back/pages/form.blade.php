@@ -96,6 +96,11 @@
 
                                     @php
                                         $previewImageMedia = $item->getFirstMedia('preview');
+                                        $previewCrops = config('persons.images.crops.person.preview') ?? [];
+
+                                        foreach ($previewCrops as &$previewCrop) {
+                                            $previewCrop['value'] = isset($previewImageMedia) ? $previewImageMedia->getCustomProperty('crop.'.$previewCrop['name']) : '';
+                                        }
                                     @endphp
 
                                     {!! Form::crop('preview', $previewImageMedia, [
@@ -106,20 +111,7 @@
                                             'filepath' => isset($previewImageMedia) ? url($previewImageMedia->getUrl()) : '',
                                             'filename' => isset($previewImageMedia) ? $previewImageMedia->file_name : '',
                                         ],
-                                        'crops' => [
-                                            [
-                                                'title' => 'Выбрать область',
-                                                'name' => 'default',
-                                                'ratio' => '86/86',
-                                                'value' => isset($previewImageMedia) ? $previewImageMedia->getCustomProperty('crop.default') : '',
-                                                'size' => [
-                                                    'width' => 86,
-                                                    'height' => 86,
-                                                    'type' => 'min',
-                                                    'description' => 'Минимальный размер области — 86x86 пикселей'
-                                                ],
-                                            ],
-                                        ],
+                                        'crops' => $previewCrops,
                                         'additional' => [
                                             [
                                                 'title' => 'Описание',
