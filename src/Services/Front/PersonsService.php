@@ -37,4 +37,16 @@ class PersonsService implements PersonsServiceContract
     {
         return $this->repository->getItemBySlug($slug, $returnBuilder);
     }
+
+    /**
+     * Получаем объекты по типу.
+     *
+     * @param string $type
+     *
+     * @return mixed
+     */
+    public function getPersonsByType(string $type = '')
+    {
+        return $this->repository->getItemsByType($type);
+    }
 }

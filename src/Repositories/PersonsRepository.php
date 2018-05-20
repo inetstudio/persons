@@ -2,6 +2,7 @@
 
 namespace InetStudio\Persons\Repositories;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
 use InetStudio\Categories\Repositories\Traits\CategoriesRepositoryTrait;
@@ -155,6 +156,30 @@ class PersonsRepository implements PersonsRepositoryContract
     }
 
     /**
+     * 
+     *
+     * @param string $type
+     *
+     * @return Collection
+     */
+    public function getItemsByType(string $type = '')
+    {
+        $items = $this->getItemsQuery(['post', 'description'], ['classifiers', 'media']);
+
+        if ($type) {
+            $items = $items->whereHas('classifiers', function ($classifiersQuery) use ($type) {
+                $classifiersQuery->where('classifiers.alias', $type);
+            });
+        }
+
+        $items = $items->get()->mapToGroups(function ($item, $key) {
+            return [$item->classifiers->first()->value => $item];
+        });
+
+        return $items;
+    }
+
+    /**
      * Возвращаем запрос на получение объектов.
      *
      * @param array $extColumns
@@ -169,6 +194,10 @@ class PersonsRepository implements PersonsRepositoryContract
         $relations = [
             'meta' => function ($query) {
                 $query->select(['metable_id', 'metable_type', 'key', 'value']);
+            },
+
+            'classifiers' => function ($query) {
+                $query->select(['type', 'value', 'alias']);
             },
 
             'media' => function ($query) {
