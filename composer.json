@@ -21,6 +21,7 @@
     "extra": {
       "laravel": {
         "providers": [
+          "InetStudio\\Persons\\Providers\\BladeServiceProvider",
           "InetStudio\\Persons\\Providers\\PersonsServiceProvider"
         ]
       }
