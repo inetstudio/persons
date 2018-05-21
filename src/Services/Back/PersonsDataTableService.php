@@ -8,6 +8,9 @@ use Yajra\DataTables\Services\DataTable;
 use InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract;
 use InetStudio\Persons\Contracts\Services\Back\PersonsDataTableServiceContract;
 
+/**
+ * Class PersonsDataTableService.
+ */
 class PersonsDataTableService extends DataTable implements PersonsDataTableServiceContract
 {
     /**

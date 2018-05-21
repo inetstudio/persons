@@ -6,6 +6,9 @@ use League\Fractal\TransformerAbstract;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
 use InetStudio\Persons\Contracts\Transformers\Back\PersonTransformerContract;
 
+/**
+ * Class PersonTransformer.
+ */
 class PersonTransformer extends TransformerAbstract implements PersonTransformerContract
 {
     /**
@@ -26,6 +29,7 @@ class PersonTransformer extends TransformerAbstract implements PersonTransformer
             'updated_at' => (string) $item->updated_at,
             'actions' => view('admin.module.persons::back.partials.datatables.actions', [
                 'id' => $item->id,
+                'href' => $item->href,
             ])->render(),
         ];
     }

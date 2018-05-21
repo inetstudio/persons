@@ -44,8 +44,6 @@ class SavePersonRequest extends FormRequest implements SavePersonRequestContract
             'slug.max' => 'Поле «URL» не должно превышать 255 символов',
             'slug.unique' => 'Такое значение поля «URL» уже существует',
 
-            'preview.crop.default.required' => 'Необходимо выбрать область отображения',
-            'preview.crop.default.json' => 'Область отображения должна быть представлена в виде JSON',
             'preview.description.max' => 'Поле «Описание» не должно превышать 255 символов',
             'preview.copyright.max' => 'Поле «Copyright» не должно превышать 255 символов',
             'preview.alt.required' => 'Поле «Alt» обязательно для заполнения',
@@ -76,10 +74,6 @@ class SavePersonRequest extends FormRequest implements SavePersonRequestContract
             'name' => 'required|max:255',
             'slug' => 'required|alpha_dash|max:255|unique:persons,slug,'.$request->get('person_id'),
 
-            'preview.crop.default' => [
-                'nullable', 'json',
-                new CropSize(86, 86, 'min', ''),
-            ],
             'preview.description' => 'max:255',
             'preview.copyright' => 'max:255',
             'preview.alt' => 'required|max:255',
