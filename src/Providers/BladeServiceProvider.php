@@ -21,7 +21,7 @@ class BladeServiceProvider extends ServiceProvider
             $view = 'admin.module.persons::back.partials.content.'.$params[0];
 
             if (view()->exists($view)) {
-                return view($view, json_decode($params[1], true));
+                return view($view, json_decode(str_replace("\r\n", '', $params[1]), true));
             }
 
             return '';
