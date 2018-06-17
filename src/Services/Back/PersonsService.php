@@ -56,6 +56,19 @@ class PersonsService implements PersonsServiceContract
     }
 
     /**
+     * Получаем объект по пользователю.
+     *
+     * @param array|int $id
+     * @param bool $returnBuilder
+     *
+     * @return mixed
+     */
+    public function getPersonByUserID(int $id, bool $returnBuilder = false)
+    {
+        return $this->repository->searchItems([['user_id', '=', $id]], $returnBuilder);
+    }
+
+    /**
      * Сохраняем модель.
      *
      * @param SavePersonRequestContract $request
@@ -66,7 +79,7 @@ class PersonsService implements PersonsServiceContract
     public function save(SavePersonRequestContract $request, int $id): PersonModelContract
     {
         $action = ($id) ? 'отредактирован' : 'создан';
-        $item = $this->repository->save($request, $id);
+        $item = $this->repository->save($request->only($this->repository->getModel()->getFillable()), $id);
 
         app()->make('InetStudio\Meta\Contracts\Services\Back\MetaServiceContract')
             ->attachToObject($request, $item);
@@ -111,7 +124,7 @@ class PersonsService implements PersonsServiceContract
      */
     public function getSuggestions(string $search, $type): array
     {
-        $items = $this->repository->searchItemsByField('name', $search, true)->addSelect(['post'])->get();
+        $items = $this->repository->searchItems([['name', 'LIKE', '%'.$search.'%']], true)->addSelect(['post'])->get();
 
         $resource = (app()->makeWith('InetStudio\Persons\Contracts\Transformers\Back\SuggestionTransformerContract', [
             'type' => $type,
@@ -129,5 +142,21 @@ class PersonsService implements PersonsServiceContract
         }
 
         return $data;
+    }
+
+    /**
+     * Присваиваем персон объекту.
+     *
+     * @param $request
+     *
+     * @param $item
+     */
+    public function attachToObject($request, $item)
+    {
+        if ($request->filled('persons')) {
+            $item->syncPersons($this->repository->getItemsByIDs((array) $request->get('persons')));
+        } else {
+            $item->detachPersons($item->persons);
+        }
     }
 }

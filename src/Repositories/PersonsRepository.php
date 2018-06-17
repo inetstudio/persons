@@ -4,17 +4,13 @@ namespace InetStudio\Persons\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
-use InetStudio\Categories\Repositories\Traits\CategoriesRepositoryTrait;
 use InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract;
-use InetStudio\Persons\Contracts\Http\Requests\Back\SavePersonRequestContract;
 
 /**
  * Class PersonsRepository.
  */
 class PersonsRepository implements PersonsRepositoryContract
 {
-    use CategoriesRepositoryTrait;
-
     /**
      * @var PersonModelContract
      */
@@ -28,6 +24,16 @@ class PersonsRepository implements PersonsRepositoryContract
     public function __construct(PersonModelContract $model)
     {
         $this->model = $model;
+    }
+
+    /**
+     * Получаем модель репозитория.
+     *
+     * @return PersonModelContract
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -64,20 +70,15 @@ class PersonsRepository implements PersonsRepositoryContract
     /**
      * Сохраняем объект.
      *
-     * @param SavePersonRequestContract $request
+     * @param array $data
      * @param int $id
      *
      * @return PersonModelContract
      */
-    public function save(SavePersonRequestContract $request, int $id): PersonModelContract
+    public function save(array $data, int $id): PersonModelContract
     {
         $item = $this->getItemByID($id);
-
-        $item->name = strip_tags($request->get('name'));
-        $item->slug = strip_tags($request->get('slug'));
-        $item->post = strip_tags($request->input('post.text'));
-        $item->description = strip_tags($request->input('description.text'));
-        $item->content = $request->input('content.text');
+        $item->fill($data);
         $item->save();
 
         return $item;
@@ -98,15 +99,14 @@ class PersonsRepository implements PersonsRepositoryContract
     /**
      * Ищем объекты.
      *
-     * @param string $field
-     * @param $value
+     * @param array $conditions
      * @param bool $returnBuilder
      *
      * @return mixed
      */
-    public function searchItemsByField(string $field, string $value, bool $returnBuilder = false)
+    public function searchItems(array $conditions, bool $returnBuilder = false)
     {
-        $builder = $this->getItemsQuery()->where($field, 'LIKE', '%'.$value.'%');
+        $builder = $this->getItemsQuery([])->where($conditions);
 
         if ($returnBuilder) {
             return $builder;
@@ -194,7 +194,7 @@ class PersonsRepository implements PersonsRepositoryContract
      */
     protected function getItemsQuery($extColumns = [], $with = []): Builder
     {
-        $defaultColumns = ['id', 'name', 'slug'];
+        $defaultColumns = ['id', 'user_id', 'name', 'slug'];
 
         $relations = [
             'meta' => function ($query) {

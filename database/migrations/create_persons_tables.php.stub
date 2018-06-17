@@ -14,13 +14,24 @@ class CreatePersonsTables extends Migration
             $table->text('post')->nullable();
             $table->text('description')->nullable();
             $table->text('content')->nullable();
+            $table->string('user_id')->default(0);
             $table->timestamps();
             $table->softDeletes();
+        });
+        
+        Schema::create('personables', function (Blueprint $table) {
+            $table->integer('person_model_id')->unsigned();
+            $table->integer('personable_id')->unsigned();
+            $table->string('personable_type');
+            $table->timestamps();
+
+            $table->foreign('person_model_id')->references('id')->on('persons')->onDelete('cascade');
         });
     }
 
     public function down()
     {
+        Schema::drop('personables');
         Schema::drop('persons');
     }
 }

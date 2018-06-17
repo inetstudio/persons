@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use InetStudio\Meta\Models\Traits\Metable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use InetStudio\ACL\Users\Models\Traits\HasUser;
 use InetStudio\Uploads\Models\Traits\HasImages;
 use Venturecraft\Revisionable\RevisionableTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -18,6 +19,7 @@ use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
 class PersonModel extends Model implements PersonModelContract, MetableContract, HasMediaConversions
 {
+    use HasUser;
     use Metable;
     use HasImages;
     use Sluggable;
@@ -47,7 +49,7 @@ class PersonModel extends Model implements PersonModelContract, MetableContract,
      * @var array
      */
     protected $fillable = [
-        'name', 'slug', 'post', 'description', 'content',
+        'name', 'slug', 'post', 'description', 'content', 'user_id',
     ];
 
     /**
@@ -60,6 +62,31 @@ class PersonModel extends Model implements PersonModelContract, MetableContract,
         'updated_at',
         'deleted_at',
     ];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strip_tags($value);
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = strip_tags($value);
+    }
+
+    public function setPostAttribute($value)
+    {
+        $this->attributes['post'] = trim(str_replace("&nbsp;", '', strip_tags($value['text'])));
+    }
+
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = trim(str_replace("&nbsp;", '', strip_tags($value['text'])));
+    }
+
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = trim(str_replace("&nbsp;", '', strip_tags($value['text'])));
+    }
 
     protected $revisionCreationsEnabled = true;
 
