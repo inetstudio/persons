@@ -89,6 +89,7 @@ class SetupCommand extends Command
                 'command' => 'inetstudio:persons:folders',
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Publish config',
                 'command' => 'vendor:publish',
                 'params' => [
