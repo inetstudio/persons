@@ -20,7 +20,7 @@ class PersonsController extends Controller implements PersonsControllerContract
      *
      * @var array
      */
-    private $services;
+    public $services;
 
     /**
      * PersonsController constructor.

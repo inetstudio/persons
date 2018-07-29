@@ -23,6 +23,7 @@
       "laravel": {
         "providers": [
           "InetStudio\\Persons\\Providers\\FormBuilderServiceProvider",
+          "InetStudio\\Persons\\Providers\\PersonsBindingsServiceProvider",
           "InetStudio\\Persons\\Providers\\PersonsServiceProvider"
         ]
       }

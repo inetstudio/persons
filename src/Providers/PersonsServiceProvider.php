@@ -20,7 +20,6 @@ class PersonsServiceProvider extends ServiceProvider
         $this->registerPublishes();
         $this->registerRoutes();
         $this->registerViews();
-        $this->registerObservers();
     }
 
     /**
@@ -91,61 +90,5 @@ class PersonsServiceProvider extends ServiceProvider
     protected function registerViews(): void
     {
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'admin.module.persons');
-    }
-
-    /**
-     * Регистрация наблюдателей.
-     *
-     * @return void
-     */
-    protected function registerObservers(): void
-    {
-        $this->app->make('InetStudio\Persons\Contracts\Models\PersonModelContract')::observe($this->app->make('InetStudio\Persons\Contracts\Observers\PersonObserverContract'));
-    }
-
-    /**
-     * Регистрация привязок, алиасов и сторонних провайдеров сервисов.
-     *
-     * @return void
-     */
-    protected function registerBindings(): void
-    {
-        // Controllers
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Controllers\Back\PersonsControllerContract', 'InetStudio\Persons\Http\Controllers\Back\PersonsController');
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Controllers\Back\PersonsDataControllerContract', 'InetStudio\Persons\Http\Controllers\Back\PersonsDataController');
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Controllers\Back\PersonsUtilityControllerContract', 'InetStudio\Persons\Http\Controllers\Back\PersonsUtilityController');
-
-        // Events
-        $this->app->bind('InetStudio\Persons\Contracts\Events\Back\ModifyPersonEventContract', 'InetStudio\Persons\Events\Back\ModifyPersonEvent');
-
-        // Models
-        $this->app->bind('InetStudio\Persons\Contracts\Models\PersonModelContract', 'InetStudio\Persons\Models\PersonModel');
-
-        // Observers
-        $this->app->bind('InetStudio\Persons\Contracts\Observers\PersonObserverContract', 'InetStudio\Persons\Observers\PersonObserver');
-
-        // Repositories
-        $this->app->bind('InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract', 'InetStudio\Persons\Repositories\PersonsRepository');
-
-        // Requests
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Requests\Back\SavePersonRequestContract', 'InetStudio\Persons\Http\Requests\Back\SavePersonRequest');
-
-        // Responses
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Responses\Back\Persons\DestroyResponseContract', 'InetStudio\Persons\Http\Responses\Back\Persons\DestroyResponse');
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Responses\Back\Persons\FormResponseContract', 'InetStudio\Persons\Http\Responses\Back\Persons\FormResponse');
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Responses\Back\Persons\IndexResponseContract', 'InetStudio\Persons\Http\Responses\Back\Persons\IndexResponse');
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Responses\Back\Persons\SaveResponseContract', 'InetStudio\Persons\Http\Responses\Back\Persons\SaveResponse');
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Responses\Back\Utility\SlugResponseContract', 'InetStudio\Persons\Http\Responses\Back\Utility\SlugResponse');
-        $this->app->bind('InetStudio\Persons\Contracts\Http\Responses\Back\Utility\SuggestionsResponseContract', 'InetStudio\Persons\Http\Responses\Back\Utility\SuggestionsResponse');
-
-        // Services
-        $this->app->bind('InetStudio\Persons\Contracts\Services\Back\PersonsDataTableServiceContract', 'InetStudio\Persons\Services\Back\PersonsDataTableService');
-        $this->app->bind('InetStudio\Persons\Contracts\Services\Back\PersonsObserverServiceContract', 'InetStudio\Persons\Services\Back\PersonsObserverService');
-        $this->app->bind('InetStudio\Persons\Contracts\Services\Back\PersonsServiceContract', 'InetStudio\Persons\Services\Back\PersonsService');
-        $this->app->bind('InetStudio\Persons\Contracts\Services\Front\PersonsServiceContract', 'InetStudio\Persons\Services\Front\PersonsService');
-
-        // Transformers
-        $this->app->bind('InetStudio\Persons\Contracts\Transformers\Back\PersonTransformerContract', 'InetStudio\Persons\Transformers\Back\PersonTransformer');
-        $this->app->bind('InetStudio\Persons\Contracts\Transformers\Back\SuggestionTransformerContract', 'InetStudio\Persons\Transformers\Back\SuggestionTransformer');
     }
 }
