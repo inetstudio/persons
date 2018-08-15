@@ -21,11 +21,12 @@ class CreatePersonsTables extends Migration
         
         Schema::create('personables', function (Blueprint $table) {
             $table->integer('person_model_id')->unsigned();
-            $table->integer('personable_id')->unsigned();
-            $table->string('personable_type');
+            $table->morphs('personable');
             $table->timestamps();
 
             $table->foreign('person_model_id')->references('id')->on('persons')->onDelete('cascade');
+
+            $table->index(['personable_id', 'personable_type']);
         });
     }
 
