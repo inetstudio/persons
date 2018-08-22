@@ -62,7 +62,7 @@ class PersonsService implements PersonsServiceContract
 
         $data = [];
 
-        $items->get()->each(function ($item, $key) use (&$data) {
+        $items->each(function ($item, $key) use (&$data) {
             foreach ($item->classifiers as $type) {
                 $data[$type->alias][] = $item;
             }
