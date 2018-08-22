@@ -3,7 +3,6 @@
 namespace InetStudio\Persons\Services\Front;
 
 use InetStudio\Persons\Contracts\Services\Front\PersonsServiceContract;
-use InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract;
 
 /**
  * Class PersonsService.
@@ -11,54 +10,64 @@ use InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract;
 class PersonsService implements PersonsServiceContract
 {
     /**
-     * @var PersonsRepositoryContract
+     * @var
      */
-    private $repository;
+    public $repository;
 
     /**
      * PersonsService constructor.
-     *
-     * @param PersonsRepositoryContract $repository
      */
-    public function __construct(PersonsRepositoryContract $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->repository = app()->make('InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract');
     }
 
     /**
-     * Получаем объект по id.
+     * Получаем объекты по списку id.
      *
-     * @param int $id
+     * @param array|int $ids
+     * @param array $params
      *
      * @return mixed
      */
-    public function getPersonById(int $id)
+    public function getPersonsByIDs($ids, array $params = [])
     {
-        return $this->repository->getItemByID($id);
+        return $this->repository->getItemsByIDs($ids, $params);
     }
 
     /**
      * Получаем объект по slug.
      *
      * @param string $slug
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getPersonBySlug(string $slug, bool $returnBuilder = false)
+    public function getPersonBySlug(string $slug, array $params = [])
     {
-        return $this->repository->getItemBySlug($slug, $returnBuilder);
+        return $this->repository->getItemBySlug($slug, $params);
     }
 
     /**
      * Получаем объекты по типу.
      *
      * @param string $type
+     * @param array $params
      *
      * @return mixed
      */
-    public function getPersonsByType(string $type = '')
+    public function getPersonsByType(string $type = '', array $params = [])
     {
-        return $this->repository->getItemsByType($type);
+        $items = $this->repository->getItemsByType($type, $params);
+
+        $data = [];
+
+        $items->get()->each(function ($item, $key) use (&$data) {
+            foreach ($item->classifiers as $type) {
+                $data[$type->alias][] = $item;
+            }
+        });
+
+        return $data;
     }
 }

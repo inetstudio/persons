@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Session;
 use League\Fractal\Serializer\DataArraySerializer;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
 use InetStudio\Persons\Contracts\Services\Back\PersonsServiceContract;
-use InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract;
 use InetStudio\Persons\Contracts\Http\Requests\Back\SavePersonRequestContract;
 
 /**
@@ -16,18 +15,16 @@ use InetStudio\Persons\Contracts\Http\Requests\Back\SavePersonRequestContract;
 class PersonsService implements PersonsServiceContract
 {
     /**
-     * @var PersonsRepositoryContract
+     * @var
      */
-    private $repository;
+    public $repository;
 
     /**
      * PersonsService constructor.
-     *
-     * @param PersonsRepositoryContract $repository
      */
-    public function __construct(PersonsRepositoryContract $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->repository = app()->make('InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract');
     }
 
     /**
@@ -46,26 +43,26 @@ class PersonsService implements PersonsServiceContract
      * Получаем объекты по списку id.
      *
      * @param array|int $ids
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getPersonsByIDs($ids, bool $returnBuilder = false)
+    public function getPersonsByIDs($ids, array $params = [])
     {
-        return $this->repository->getItemsByIDs($ids, $returnBuilder);
+        return $this->repository->getItemsByIDs($ids, $params);
     }
 
     /**
      * Получаем объект по пользователю.
      *
      * @param array|int $id
-     * @param bool $returnBuilder
+     * @param array $params
      *
      * @return mixed
      */
-    public function getPersonByUserID(int $id, bool $returnBuilder = false)
+    public function getPersonByUserID(int $id, array $params = [])
     {
-        return $this->repository->searchItems([['user_id', '=', $id]], $returnBuilder);
+        return $this->repository->searchItems([['user_id', '=', $id]], $params);
     }
 
     /**
@@ -124,7 +121,7 @@ class PersonsService implements PersonsServiceContract
      */
     public function getSuggestions(string $search, $type): array
     {
-        $items = $this->repository->searchItems([['name', 'LIKE', '%'.$search.'%']], true)->addSelect(['post'])->get();
+        $items = $this->repository->searchItems([['name', 'LIKE', '%'.$search.'%']]);
 
         $resource = (app()->makeWith('InetStudio\Persons\Contracts\Transformers\Back\SuggestionTransformerContract', [
             'type' => $type,

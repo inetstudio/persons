@@ -52,7 +52,7 @@ class PersonsDataTableService extends DataTable implements PersonsDataTableServi
      */
     public function query()
     {
-        $query = $this->repository->getAllItems(true);
+        $query = $this->repository->getItemsQuery();
 
         return $query;
     }
