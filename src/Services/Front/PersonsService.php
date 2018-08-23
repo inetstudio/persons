@@ -23,6 +23,18 @@ class PersonsService implements PersonsServiceContract
     }
 
     /**
+     * Получаем объект по id.
+     *
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function getPersonById(int $id = 0)
+    {
+        return $this->repository->getItemByID($id);
+    }
+
+    /**
      * Получаем объекты по списку id.
      *
      * @param array|int $ids
