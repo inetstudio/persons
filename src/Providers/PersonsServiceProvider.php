@@ -2,6 +2,7 @@
 
 namespace InetStudio\Persons\Providers;
 
+use Collective\Html\FormBuilder;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -20,6 +21,7 @@ class PersonsServiceProvider extends ServiceProvider
         $this->registerPublishes();
         $this->registerRoutes();
         $this->registerViews();
+        $this->registerFormComponents();
     }
 
     /**
@@ -80,5 +82,15 @@ class PersonsServiceProvider extends ServiceProvider
     protected function registerViews(): void
     {
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'admin.module.persons');
+    }
+
+    /**
+     * Регистрация компонентов форм.
+     *
+     * @return void
+     */
+    protected function registerFormComponents()
+    {
+        FormBuilder::component('persons', 'admin.module.persons::back.forms.fields.persons', ['name' => null, 'value' => null, 'attributes' => null]);
     }
 }
