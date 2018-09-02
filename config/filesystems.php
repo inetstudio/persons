@@ -9,8 +9,8 @@ return [
 
     'persons' => [
         'driver' => 'local',
-        'root' => storage_path('app/public/persons/'),
-        'url' => env('APP_URL').'/storage/persons/',
+        'root' => storage_path('app/public/persons'),
+        'url' => env('APP_URL').'/storage/persons',
         'visibility' => 'public',
     ],
 
