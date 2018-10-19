@@ -10,9 +10,7 @@
       }
     ],
     "require": {
-      "php" : "^7.1",
-      "inetstudio/admin-panel": "1.6.*",
-      "inetstudio/widgets": "1.6.*"
+      "inetstudio/widgets": "1.7.*"
     },
     "autoload": {
       "psr-4": {
