@@ -7,6 +7,7 @@ use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use InetStudio\Meta\Models\Traits\Metable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\ACL\Users\Models\Traits\HasUser;
 use InetStudio\Uploads\Models\Traits\HasImages;
@@ -15,9 +16,8 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
 use InetStudio\Meta\Contracts\Models\Traits\MetableContract;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class PersonModel extends Model implements PersonModelContract, MetableContract, HasMediaConversions
+class PersonModel extends Model implements PersonModelContract, MetableContract, HasMedia
 {
     use HasUser;
     use Metable;
