@@ -15,6 +15,21 @@ use InetStudio\Persons\Contracts\Http\Responses\Back\Utility\SuggestionsResponse
 class PersonsUtilityController extends Controller implements PersonsUtilityControllerContract
 {
     /**
+     * Используемые сервисы.
+     *
+     * @var array
+     */
+    public $services;
+
+    /**
+     * PersonsUtilityController constructor.
+     */
+    public function __construct()
+    {
+        $this->services['persons'] = app()->make('InetStudio\Persons\Contracts\Services\Back\PersonsServiceContract');
+    }
+
+    /**
      * Получаем slug для модели по строке.
      *
      * @param Request $request
@@ -23,8 +38,12 @@ class PersonsUtilityController extends Controller implements PersonsUtilityContr
      */
     public function getSlug(Request $request): SlugResponseContract
     {
+        $id = (int) $request->get('id');
         $name = $request->get('name');
-        $slug = ($name) ? SlugService::createSlug(app()->make('InetStudio\Persons\Contracts\Models\PersonModelContract'), 'slug', $name) : '';
+
+        $model = $this->services['persons']->getPersonObject($id);
+
+        $slug = ($name) ? SlugService::createSlug($model, 'slug', $name) : '';
 
         return app()->makeWith('InetStudio\Persons\Contracts\Http\Responses\Back\Utility\SlugResponseContract', [
             'slug' => $slug,

@@ -113,6 +113,7 @@ class PersonModel extends Model implements PersonModelContract, MetableContract,
             'slug' => [
                 'source' => 'name',
                 'unique' => true,
+                'includeTrashed' => true,
             ],
         ];
     }
