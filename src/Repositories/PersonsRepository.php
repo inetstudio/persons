@@ -4,6 +4,7 @@ namespace InetStudio\Persons\Repositories;
 
 use InetStudio\AdminPanel\Repositories\BaseRepository;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
+use InetStudio\AdminPanel\Repositories\Traits\SlugsRepositoryTrait;
 use InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract;
 
 /**
@@ -11,6 +12,8 @@ use InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract;
  */
 class PersonsRepository extends BaseRepository implements PersonsRepositoryContract
 {
+    use SlugsRepositoryTrait;
+
     /**
      * PersonsRepository constructor.
      *
@@ -34,24 +37,6 @@ class PersonsRepository extends BaseRepository implements PersonsRepositoryContr
                 $query->select(['id', 'model_id', 'model_type', 'collection_name', 'file_name', 'disk', 'custom_properties']);
             },
         ];
-    }
-
-    /**
-     * Получаем объект по slug.
-     *
-     * @param string $slug
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getItemBySlug(string $slug, array $params = [])
-    {
-        $builder = $this->getItemsQuery($params)
-            ->whereSlug($slug);
-
-        $item = $builder->first();
-
-        return $item;
     }
 
     /**

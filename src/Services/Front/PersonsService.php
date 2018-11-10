@@ -2,62 +2,23 @@
 
 namespace InetStudio\Persons\Services\Front;
 
+use InetStudio\AdminPanel\Services\Front\BaseService;
+use InetStudio\AdminPanel\Services\Front\Traits\SlugsServiceTrait;
 use InetStudio\Persons\Contracts\Services\Front\PersonsServiceContract;
 
 /**
  * Class PersonsService.
  */
-class PersonsService implements PersonsServiceContract
+class PersonsService extends BaseService implements PersonsServiceContract
 {
-    /**
-     * @var
-     */
-    public $repository;
+    use SlugsServiceTrait;
 
     /**
      * PersonsService constructor.
      */
     public function __construct()
     {
-        $this->repository = app()->make('InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract');
-    }
-
-    /**
-     * Получаем объект по id.
-     *
-     * @param int $id
-     *
-     * @return mixed
-     */
-    public function getPersonById(int $id = 0)
-    {
-        return $this->repository->getItemByID($id);
-    }
-
-    /**
-     * Получаем объекты по списку id.
-     *
-     * @param array|int $ids
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getPersonsByIDs($ids, array $params = [])
-    {
-        return $this->repository->getItemsByIDs($ids, $params);
-    }
-
-    /**
-     * Получаем объект по slug.
-     *
-     * @param string $slug
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function getPersonBySlug(string $slug, array $params = [])
-    {
-        return $this->repository->getItemBySlug($slug, $params);
+        parent::__construct(app()->make('InetStudio\Persons\Contracts\Repositories\PersonsRepositoryContract'));
     }
 
     /**
