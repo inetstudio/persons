@@ -6,9 +6,9 @@
     $userID = \Auth::user()->id;
 
     $value = $item->persons()->pluck('id')->toArray();
-    $options = (old('persons')) ? $personsService->getPersonsByIDs(old('persons'), true)->pluck('name', 'id')->toArray() : $item->persons()->pluck('name', 'id')->toArray();
+    $options = (old('persons')) ? $personsService->getPersonsByIDs(old('persons'))->pluck('name', 'id')->toArray() : $item->persons()->pluck('name', 'id')->toArray();
 
-    $userPerson = $personsService->getPersonByUserID($userID, true)->pluck('name', 'id')->toArray();
+    $userPerson = $personsService->getPersonByUserID($userID)->pluck('name', 'id')->toArray();
 @endphp
 
 {!! Form::dropdown('persons[]', (empty($value)) ? array_keys($userPerson) : $value, [

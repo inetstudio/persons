@@ -52,7 +52,9 @@ class PersonsDataTableService extends DataTable implements PersonsDataTableServi
      */
     public function query()
     {
-        $query = $this->repository->getItemsQuery();
+        $query = $this->repository->getItemsQuery([
+            'columns' => ['created_at', 'updated_at'],
+        ]);
 
         return $query;
     }
