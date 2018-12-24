@@ -80,12 +80,12 @@ class PersonModel extends Model implements PersonModelContract, MetableContract,
 
     public function setDescriptionAttribute($value)
     {
-        $this->attributes['description'] = trim(str_replace("&nbsp;", '', strip_tags($value['text'])));
+        $this->attributes['description'] = trim(str_replace("&nbsp;", ' ', (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '')));
     }
 
     public function setContentAttribute($value)
     {
-        $this->attributes['content'] = trim(str_replace("&nbsp;", '', strip_tags($value['text'])));
+        $this->attributes['content'] = trim(str_replace("&nbsp;", ' ', (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '')));
     }
 
     protected $revisionCreationsEnabled = true;

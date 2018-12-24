@@ -136,9 +136,9 @@
                                             'title' => 'Лид',
                                         ],
                                         'field' => [
-                                            'class' => 'tinymce-simple',
-                                            'type' => 'simple',
+                                            'class' => 'tinymce',
                                             'id' => 'description',
+                                            'hasImages' => false,
                                         ],
                                     ]) !!}
 
