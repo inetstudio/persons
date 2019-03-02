@@ -30,7 +30,7 @@ class PersonsRepository extends BaseRepository implements PersonsRepositoryContr
             },
 
             'classifiers' => function ($query) {
-                $query->select(['type', 'value', 'alias']);
+                $query->select(['id', 'value', 'alias']);
             },
 
             'media' => function ($query) {
@@ -53,7 +53,7 @@ class PersonsRepository extends BaseRepository implements PersonsRepositoryContr
 
         if ($type) {
             $builder->whereHas('classifiers', function ($classifiersQuery) use ($type) {
-                $classifiersQuery->where('classifiers.alias', $type);
+                $classifiersQuery->where('classifiers_entries.alias', $type);
             });
         } else {
             $builder->whereHas('classifiers');
