@@ -30,7 +30,7 @@ class PersonsRepository extends BaseRepository implements PersonsRepositoryContr
             },
 
             'classifiers' => function ($query) {
-                $query->select(['id', 'value', 'alias']);
+                $query->select(['classifiers_entries.id', 'classifiers_entries.value', 'classifiers_entries.alias']);
             },
 
             'media' => function ($query) {
