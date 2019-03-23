@@ -10,7 +10,7 @@
       }
     ],
     "require": {
-      "inetstudio/widgets": "1.7.*"
+      "inetstudio/widgets": "1.8.*"
     },
     "autoload": {
       "psr-4": {

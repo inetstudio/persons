@@ -3,21 +3,22 @@
 namespace InetStudio\Persons\Models;
 
 use Cocur\Slugify\Slugify;
+use Illuminate\Support\Arr;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Cviebrock\EloquentSluggable\Sluggable;
 use InetStudio\Meta\Models\Traits\Metable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\ACL\Users\Models\Traits\HasUser;
 use InetStudio\Uploads\Models\Traits\HasImages;
-use Venturecraft\Revisionable\RevisionableTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\Persons\Contracts\Models\PersonModelContract;
 use InetStudio\Meta\Contracts\Models\Traits\MetableContract;
 
-class PersonModel extends Model implements PersonModelContract, MetableContract, HasMedia
+class PersonModel extends Model implements PersonModelContract, MetableContract, HasMedia, Auditable
 {
     use HasUser;
     use Metable;
@@ -26,7 +27,7 @@ class PersonModel extends Model implements PersonModelContract, MetableContract,
     use Searchable;
     use SoftDeletes;
     use HasClassifiers;
-    use RevisionableTrait;
+    use \OwenIt\Auditing\Auditable;
     use SluggableScopeHelpers;
 
     const HREF = '/person/';
@@ -88,7 +89,12 @@ class PersonModel extends Model implements PersonModelContract, MetableContract,
         $this->attributes['content'] = trim(str_replace("&nbsp;", ' ', (isset($value['text'])) ? $value['text'] : (! is_array($value) ? $value : '')));
     }
 
-    protected $revisionCreationsEnabled = true;
+    /**
+     * Should the timestamps be audited?
+     *
+     * @var bool
+     */
+    protected $auditTimestamps = true;
 
     /**
      * Настройка полей для поиска.
@@ -97,7 +103,7 @@ class PersonModel extends Model implements PersonModelContract, MetableContract,
      */
     public function toSearchableArray()
     {
-        $arr = array_only($this->toArray(), ['id', 'name', 'post', 'description', 'content']);
+        $arr = Arr::only($this->toArray(), ['id', 'name', 'post', 'description', 'content']);
 
         return $arr;
     }

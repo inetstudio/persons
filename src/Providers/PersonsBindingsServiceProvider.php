@@ -3,17 +3,13 @@
 namespace InetStudio\Persons\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
 /**
  * Class PersonsBindingsServiceProvider.
  */
-class PersonsBindingsServiceProvider extends ServiceProvider
+class PersonsBindingsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-    * @var  bool
-    */
-    protected $defer = true;
-
     /**
     * @var  array
     */
