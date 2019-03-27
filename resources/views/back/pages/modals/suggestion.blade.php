@@ -9,39 +9,37 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="ibox-content form-horizontal">
-                        <div class="row">
+                    <div class="ibox-content">
 
-                            {!! Form::hidden('person_data', '', [
-                                'class' => 'choose-data',
-                                'id' => 'person_data',
-                            ]) !!}
+                        {!! Form::hidden('person_data', '', [
+                            'class' => 'choose-data',
+                            'id' => 'person_data',
+                        ]) !!}
 
-                            {!! Form::string('person', '', [
-                                'label' => [
-                                    'title' => 'Персона',
-                                ],
-                                'field' => [
-                                    'class' => 'form-control autocomplete',
-                                    'data-search' => route('back.persons.getSuggestions'),
-                                    'data-target' => '#person_data'
-                                ],
-                            ]) !!}
+                        {!! Form::string('person', '', [
+                            'label' => [
+                                'title' => 'Персона',
+                            ],
+                            'field' => [
+                                'class' => 'form-control autocomplete',
+                                'data-search' => route('back.persons.getSuggestions'),
+                                'data-target' => '#person_data'
+                            ],
+                        ]) !!}
 
-                            {!! Form::wysiwyg('person_opinion', '', [
-                                'label' => [
-                                    'title' => 'Текст',
-                                ],
-                                'field' => [
-                                    'class' => 'tinymce-simple',
-                                    'type' => 'simple',
-                                    'id' => 'person_opinion',
-                                    'cols' => '50',
-                                    'rows' => '10',
-                                ],
-                            ]) !!}
+                        {!! Form::wysiwyg('person_opinion', '', [
+                            'label' => [
+                                'title' => 'Текст',
+                            ],
+                            'field' => [
+                                'class' => 'tinymce-simple',
+                                'type' => 'simple',
+                                'id' => 'person_opinion',
+                                'cols' => '50',
+                                'rows' => '10',
+                            ],
+                        ]) !!}
 
-                        </div>
                     </div>
                 </div>
 

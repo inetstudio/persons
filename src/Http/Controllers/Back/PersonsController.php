@@ -46,7 +46,7 @@ class PersonsController extends Controller implements PersonsControllerContract
     }
 
     /**
-     * Добавление объекта.
+     * Создание объекта.
      *
      * @return FormResponseContract
      */
