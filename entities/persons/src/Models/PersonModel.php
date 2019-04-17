@@ -20,7 +20,7 @@ use InetStudio\AdminPanel\Base\Models\Traits\Scopes\BuildQueryScopeTrait;
 use InetStudio\PersonsPackage\Persons\Contracts\Models\PersonModelContract;
 
 /**
- * Class PersonModel
+ * Class PersonModel.
  */
 class PersonModel extends Model implements PersonModelContract
 {
