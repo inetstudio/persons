@@ -3,8 +3,7 @@
 namespace InetStudio\PersonsPackage\Persons\Models\Traits;
 
 use ArrayAccess;
-use Illuminate\Database\Eloquent\Collection;
-use InetStudio\Classifiers\Entries\Contracts\Models\EntryModelContract;
+use Illuminate\Support\Collection;
 use InetStudio\PersonsPackage\Persons\Contracts\Models\PersonModelContract;
 
 /**
@@ -29,7 +28,7 @@ trait HasPersonsCollection
             return ! $this->persons->pluck('id')->intersect((array) $persons)->isEmpty();
         }
 
-        if ($persons instanceof EntryModelContract) {
+        if ($persons instanceof PersonModelContract) {
             return $this->persons->contains('alias', $persons['alias']);
         }
 
@@ -73,7 +72,7 @@ trait HasPersonsCollection
             return $this->persons->pluck('id')->intersect($persons)->count() == count($persons);
         }
 
-        if ($persons instanceof EntryModelContract) {
+        if ($persons instanceof PersonModelContract) {
             return $this->persons->contains('slug', $persons['slug']);
         }
 

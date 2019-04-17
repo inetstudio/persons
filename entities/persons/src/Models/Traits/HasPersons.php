@@ -273,7 +273,7 @@ trait HasPersons
         $event = $action === 'syncWithoutDetaching' ? 'attach' : $action;
 
         // Hydrate Persons
-        $persons = static::hydratePersons($persons)->pluck('id')->toArray();
+        $persons = $this->hydratePersons($persons)->pluck('id')->toArray();
 
         // Fire the Person syncing event
         static::$dispatcher->dispatch('inetstudio.persons.'.$event.'ing', [$this, $persons]);

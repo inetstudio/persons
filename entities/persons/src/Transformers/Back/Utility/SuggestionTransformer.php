@@ -40,7 +40,7 @@ class SuggestionTransformer extends TransformerAbstract implements SuggestionTra
             ? [
                 'value' => $item['name'],
                 'data' => [
-                    'id' => $item->id,
+                    'id' => $item['id'],
                     'type' => get_class($item),
                     'name' => $item['name'],
                     'post' => $item['post'],

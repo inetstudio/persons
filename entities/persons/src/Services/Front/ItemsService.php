@@ -36,7 +36,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $data = [];
 
         $items->each(
-            function ($item, $key) use (&$data) {
+            function ($item) use (&$data) {
                 foreach ($item->classifiers as $type) {
                     $data[$type->alias][] = $item;
                 }

@@ -236,7 +236,7 @@ class PersonModel extends Model implements PersonModelContract
      */
     public function getHrefAttribute(): string
     {
-        return url(self::HREF.($this->slug ?: $this->id));
+        return url(self::HREF.($this->getAttribute('slug') ?: $this->getAttribute('id')));
     }
 
     /**

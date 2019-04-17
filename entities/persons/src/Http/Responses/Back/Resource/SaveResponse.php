@@ -35,10 +35,13 @@ class SaveResponse implements SaveResponseContract
      */
     public function toResponse($request)
     {
+        $item = $this->item->fresh();
+
         return response()->redirectToRoute(
-            'back.persons.edit', [
-            $this->item->fresh()->id,
-        ]
+            'back.persons.edit',
+            [
+                $item['id'],
+            ]
         );
     }
 }

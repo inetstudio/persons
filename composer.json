@@ -11,6 +11,7 @@
     ],
     "require": {
       "inetstudio/admin-panel": "1.8.*",
+      "inetstudio/classifiers": "1.8.*",
       "inetstudio/widgets": "1.8.*"
     },
     "autoload": {
