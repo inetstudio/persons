@@ -10,18 +10,21 @@
       }
     ],
     "require": {
+      "inetstudio/admin-panel": "1.8.*",
       "inetstudio/widgets": "1.8.*"
     },
     "autoload": {
       "psr-4": {
-        "InetStudio\\Persons\\": "src/"
+        "InetStudio\\PersonsPackage\\": "package/src",
+        "InetStudio\\PersonsPackage\\Persons\\": "entities/persons/src"
       }
     },
     "extra": {
       "laravel": {
         "providers": [
-          "InetStudio\\Persons\\Providers\\PersonsBindingsServiceProvider",
-          "InetStudio\\Persons\\Providers\\PersonsServiceProvider"
+          "InetStudio\\PersonsPackage\\Providers\\ServiceProvider",
+          "InetStudio\\PersonsPackage\\Persons\\Providers\\BindingsServiceProvider",
+          "InetStudio\\PersonsPackage\\Persons\\Providers\\ServiceProvider"
         ]
       }
     }
