@@ -48,7 +48,7 @@ trait HasPersonsCollection
      */
     public function hasAnyPerson($persons): bool
     {
-        return static::hasPerson($persons);
+        return $this->hasPerson($persons);
     }
 
     /**
