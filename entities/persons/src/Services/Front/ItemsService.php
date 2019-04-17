@@ -31,7 +31,7 @@ class ItemsService extends BaseService implements ItemsServiceContract
      */
     public function getItemsByType(string $type = '', array $params = []): array
     {
-        $items = $this->model->itemsByType($type, $params);
+        $items = $this->model->itemsByType($type, $params)->get();
 
         $data = [];
 
