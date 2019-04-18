@@ -3,6 +3,7 @@
 namespace InetStudio\PersonsPackage\Persons\Services\Front;
 
 use InetStudio\AdminPanel\Base\Services\BaseService;
+use InetStudio\AdminPanel\Base\Services\Traits\SlugsServiceTrait;
 use InetStudio\PersonsPackage\Persons\Contracts\Models\PersonModelContract;
 use InetStudio\PersonsPackage\Persons\Contracts\Services\Front\ItemsServiceContract;
 
@@ -11,6 +12,8 @@ use InetStudio\PersonsPackage\Persons\Contracts\Services\Front\ItemsServiceContr
  */
 class ItemsService extends BaseService implements ItemsServiceContract
 {
+    use SlugsServiceTrait;
+
     /**
      * ItemsService constructor.
      *
