@@ -21,7 +21,7 @@ trait HasPersonsCollection
     public function hasPerson($persons): bool
     {
         if ($this->isPersonsStringBased($persons)) {
-            return ! $this->persons->pluck('alias')->intersect((array) $persons)->isEmpty();
+            return ! $this->persons->pluck('slug')->intersect((array) $persons)->isEmpty();
         }
 
         if ($this->isPersonsIntBased($persons)) {
@@ -29,11 +29,11 @@ trait HasPersonsCollection
         }
 
         if ($persons instanceof PersonModelContract) {
-            return $this->persons->contains('alias', $persons['alias']);
+            return $this->persons->contains('slug', $persons['slug']);
         }
 
         if ($persons instanceof Collection) {
-            return ! $persons->intersect($this->persons->pluck('alias'))->isEmpty();
+            return ! $persons->intersect($this->persons->pluck('slug'))->isEmpty();
         }
 
         return false;
