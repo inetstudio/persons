@@ -78,6 +78,19 @@ return [
         ],
         'crops' => [
             'person' => [
+                'og_image' => [
+                    [
+                        'title' => 'Выбрать область',
+                        'name' => 'default',
+                        'ratio' => '968/475',
+                        'size' => [
+                            'width' => 968,
+                            'height' => 475,
+                            'type' => 'min',
+                            'description' => 'Минимальный размер области — 968x475 пикселей',
+                        ],
+                    ],
+                ],
                 'preview' => [
                     [
                         'title' => 'Квадратная область',

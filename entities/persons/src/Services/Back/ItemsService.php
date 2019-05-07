@@ -43,8 +43,9 @@ class ItemsService extends BaseService implements ItemsServiceContract
         $itemData = Arr::only($data, $this->model->getFillable());
         $item = $this->saveModel($itemData, $id);
 
-        app()->make('InetStudio\Meta\Contracts\Services\Back\MetaServiceContract')
-            ->attachToObject(request(), $item);
+        $metaData = Arr::get($data, 'meta', []);
+        app()->make('InetStudio\MetaPackage\Meta\Contracts\Services\Back\ItemsServiceContract')
+            ->attachToObject($metaData, $item);
 
         $classifiersData = Arr::get($data, 'classifiers', []);
         app()->make('InetStudio\Classifiers\Entries\Contracts\Services\Back\ItemsServiceContract')

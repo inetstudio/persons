@@ -8,11 +8,11 @@ use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
-use InetStudio\Meta\Models\Traits\Metable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\ACL\Users\Models\Traits\HasUser;
 use InetStudio\Uploads\Models\Traits\HasImages;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use InetStudio\Classifiers\Models\Traits\HasClassifiers;
 use InetStudio\AdminPanel\Base\Models\Traits\SluggableTrait;
@@ -25,7 +25,7 @@ use InetStudio\PersonsPackage\Persons\Contracts\Models\PersonModelContract;
 class PersonModel extends Model implements PersonModelContract
 {
     use HasUser;
-    use Metable;
+    use HasMeta;
     use Auditable;
     use HasImages;
     use Sluggable;
