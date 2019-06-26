@@ -16,7 +16,7 @@
         'title' => $attributes['label'] ?? 'Персоны',
     ],
     'field' => [
-        'class' => 'select2 form-control',
+        'class' => 'select2-drop form-control',
         'data-placeholder' => $attributes['placeholder'] ?? 'Выберите персон',
         'style' => 'width: 100%',
         'multiple' => 'multiple',
