@@ -6,7 +6,7 @@
     $userID = auth()->user()->id;
 
     $value = $item->persons()->pluck('id')->toArray();
-    $options = (old('persons')) ? $personsService->getItemsById(old('persons'))->pluck('name', 'id')->toArray() : $item->persons()->pluck('name', 'id')->toArray();
+    $options = (old('persons')) ? $personsService->getItemById(old('persons'))->pluck('name', 'id')->toArray() : $item->persons()->pluck('name', 'id')->toArray();
 
     $userPerson = $personsService->getItemsByUserId($userID)->pluck('name', 'id')->toArray();
 @endphp
