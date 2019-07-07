@@ -22,9 +22,6 @@ Route::group(
             'persons',
             'ResourceControllerContract',
             [
-                'except' => [
-                    'show',
-                ],
                 'as' => 'back',
             ]
         );

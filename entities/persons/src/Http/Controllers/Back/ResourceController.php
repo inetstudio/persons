@@ -10,6 +10,7 @@ use InetStudio\PersonsPackage\Persons\Contracts\Http\Requests\Back\SaveItemReque
 use InetStudio\PersonsPackage\Persons\Contracts\Http\Controllers\Back\ResourceControllerContract;
 use InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\FormResponseContract;
 use InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\SaveResponseContract;
+use InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\ShowResponseContract;
 use InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\IndexResponseContract;
 use InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\DestroyResponseContract;
 
@@ -37,6 +38,23 @@ class ResourceController extends Controller implements ResourceControllerContrac
                 'data' => compact('table'),
             ]
         );
+    }
+
+    /**
+     * Получение объекта.
+     *
+     * @param  ItemsServiceContract  $resourceService
+     * @param  int  $id
+     *
+     * @return ShowResponseContract
+     *
+     * @throws BindingResolutionException
+     */
+    public function show(ItemsServiceContract $resourceService, int $id = 0): ShowResponseContract
+    {
+        $item = $resourceService->getItemById($id);
+
+        return $this->app->make(ShowResponseContract::class, compact('item'));
     }
 
     /**

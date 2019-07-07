@@ -23,6 +23,7 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
         'InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\FormResponseContract' => 'InetStudio\PersonsPackage\Persons\Http\Responses\Back\Resource\FormResponse',
         'InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\IndexResponseContract' => 'InetStudio\PersonsPackage\Persons\Http\Responses\Back\Resource\IndexResponse',
         'InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\SaveResponseContract' => 'InetStudio\PersonsPackage\Persons\Http\Responses\Back\Resource\SaveResponse',
+        'InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Resource\ShowResponseContract' => 'InetStudio\PersonsPackage\Persons\Http\Responses\Back\Resource\ShowResponse',
         'InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Utility\SlugResponseContract' => 'InetStudio\PersonsPackage\Persons\Http\Responses\Back\Utility\SlugResponse',
         'InetStudio\PersonsPackage\Persons\Contracts\Http\Responses\Back\Utility\SuggestionsResponseContract' => 'InetStudio\PersonsPackage\Persons\Http\Responses\Back\Utility\SuggestionsResponse',
         'InetStudio\PersonsPackage\Persons\Contracts\Models\PersonModelContract' => 'InetStudio\PersonsPackage\Persons\Models\PersonModel',
@@ -31,6 +32,7 @@ class BindingsServiceProvider extends BaseServiceProvider implements DeferrableP
         'InetStudio\PersonsPackage\Persons\Contracts\Services\Back\UtilityServiceContract' => 'InetStudio\PersonsPackage\Persons\Services\Back\UtilityService',
         'InetStudio\PersonsPackage\Persons\Contracts\Services\Front\ItemsServiceContract' => 'InetStudio\PersonsPackage\Persons\Services\Front\ItemsService',
         'InetStudio\PersonsPackage\Persons\Contracts\Transformers\Back\Resource\IndexTransformerContract' => 'InetStudio\PersonsPackage\Persons\Transformers\Back\Resource\IndexTransformer',
+        'InetStudio\PersonsPackage\Persons\Contracts\Transformers\Back\Resource\ShowTransformerContract' => 'InetStudio\PersonsPackage\Persons\Transformers\Back\Resource\ShowTransformer',
         'InetStudio\PersonsPackage\Persons\Contracts\Transformers\Back\Utility\SuggestionTransformerContract' => 'InetStudio\PersonsPackage\Persons\Transformers\Back\Utility\SuggestionTransformer',
     ];
 
