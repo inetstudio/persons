@@ -114,7 +114,6 @@ class PersonModel extends Model implements PersonModelContract
             'slug' => [
                 'source' => 'name',
                 'unique' => true,
-                'includeTrashed' => true,
             ],
         ];
     }
