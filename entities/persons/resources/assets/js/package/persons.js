@@ -1,13 +1,14 @@
 let persons = {};
 
 persons.init = function() {
-  $('#choose_person_modal').on('hidden.bs.modal', function(e) {
-    let modal = $(this);
-
-    modal.find('.choose-data').val('');
-    modal.find('input[name=person]').val('');
-    window.tinymce.get('person_opinion').setContent('');
-  });
+  if (!window.Admin.vue.modulesComponents.modules.hasOwnProperty('persons-package')) {
+    window.Admin.vue.modulesComponents.modules = Object.assign(
+        {}, window.Admin.vue.modulesComponents.modules, {
+          'persons-package': {
+            components: [],
+          },
+        });
+  }
 };
 
 module.exports = persons;
