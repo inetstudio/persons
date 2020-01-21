@@ -29,7 +29,7 @@
                         <base-wysiwyg
                             label = "Текст"
                             name = "person_opinion"
-                            v-bind:value.sync="model.additional_info.opinion"
+                            v-bind:value.sync="model.params.opinion"
                             v-bind:simple = true
                             v-bind:attributes = "{
                                 'id': 'person_opinion',
@@ -66,7 +66,7 @@
 
             axios.get(url).then(response => {
               $(component.$refs.person_suggestion.$refs.autocomplete).val(response.data.name).trigger('change');
-              window.tinymce.get('person_opinion').setContent(component.model.additional_info.opinion);
+              window.tinymce.get('person_opinion').setContent(component.model.params.opinion);
 
               component.options.loading = false;
             });
