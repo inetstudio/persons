@@ -8,9 +8,9 @@ window.tinymce.PluginManager.add('persons', function(editor) {
               false,
               '<img class="content-widget" data-type="person" data-id="' + model.id + '" alt="Виджет-персона: '+model.additional_info.name+'" />',
           );
-        },
-      },
-    },
+        }
+      }
+    }
   };
 
   function initPersonsComponents() {
@@ -22,13 +22,15 @@ window.tinymce.PluginManager.add('persons', function(editor) {
               data: widgetData,
             },
           ]);
-    } else {
-      let component = window.Admin.vue.modulesComponents.$refs['persons-package_PersonWidget'][0];
-
-      component.$data.model.id = widgetData.model.id;
     }
   }
-  
+
+  function loadWidget() {
+    let component = window.Admin.vue.modulesComponents.$refs['persons-package_PersonWidget'][0];
+
+    component.$data.model.id = widgetData.model.id;
+  }
+
   editor.addButton('add_person_widget', {
     title: 'Персоны',
     icon: 'fa fa-address-book',
@@ -46,6 +48,8 @@ window.tinymce.PluginManager.add('persons', function(editor) {
         initPersonsComponents();
 
         window.waitForElement('#add_person_widget_modal', function() {
+          loadWidget();
+
           $('#add_person_widget_modal').modal();
         });
       } else {

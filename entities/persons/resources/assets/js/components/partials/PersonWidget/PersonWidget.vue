@@ -66,7 +66,7 @@
 
             axios.get(url).then(response => {
               $(component.$refs.person_suggestion.$refs.autocomplete).val(response.data.name).trigger('change');
-              window.tinymce.get('person_opinion').setContent(component.model.params.opinion);
+              window.tinymce.get('person_opinion').setContent(_.get(component.model.params, 'opinion', ''));
 
               component.options.loading = false;
             });
