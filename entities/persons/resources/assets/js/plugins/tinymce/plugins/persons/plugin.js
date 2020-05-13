@@ -13,20 +13,8 @@ window.tinymce.PluginManager.add('persons', function(editor) {
     }
   };
 
-  function initPersonsComponents() {
-    if (typeof window.Admin.vue.modulesComponents.$refs['persons-package_PersonWidget'] == 'undefined') {
-      window.Admin.vue.modulesComponents.modules['persons-package'].components = _.union(
-          window.Admin.vue.modulesComponents.modules['persons-package'].components, [
-            {
-              name: 'PersonWidget',
-              data: widgetData,
-            },
-          ]);
-    }
-  }
-
   function loadWidget() {
-    let component = window.Admin.vue.modulesComponents.$refs['persons-package_PersonWidget'][0];
+    let component = window.Admin.vue.helpers.getVueComponent('persons-package', 'PersonWidget');
 
     component.$data.model.id = widgetData.model.id;
   }
@@ -45,7 +33,7 @@ window.tinymce.PluginManager.add('persons', function(editor) {
           id: parseInt($(content).attr('data-id')) || 0,
         };
 
-        initPersonsComponents();
+        window.Admin.vue.helpers.initComponent('persons-package', 'PersonWidget', widgetData);
 
         window.waitForElement('#add_person_widget_modal', function() {
           loadWidget();
