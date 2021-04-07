@@ -119,7 +119,7 @@ trait HasPersons
     public function scopeWithAllPersons(Builder $query, $persons, string $column = 'slug'): Builder
     {
         $persons = $this->isPersonsStringBased($persons)
-            ? $persons : $this->hydratePersons($persons)->pluck($column);
+            ? $persons : $this->hydratePersons($persons)->pluck($column)->toArray();
 
         collect($persons)->each(
             function ($person) use ($query, $column) {
@@ -149,7 +149,7 @@ trait HasPersons
     public function scopeWithAnyPersons(Builder $query, $persons, string $column = 'slug'): Builder
     {
         $persons = $this->isPersonsStringBased($persons)
-            ? $persons : $this->hydratePersons($persons)->pluck($column);
+            ? $persons : $this->hydratePersons($persons)->pluck($column)->toArray();
 
         return $query->whereHas(
             'persons',
@@ -189,7 +189,7 @@ trait HasPersons
     public function scopeWithoutPersons(Builder $query, $persons, string $column = 'slug'): Builder
     {
         $persons = $this->isPersonsStringBased($persons)
-            ? $persons : $this->hydratePersons($persons)->pluck($column);
+            ? $persons : $this->hydratePersons($persons)->pluck($column)->toArray();
 
         return $query->whereDoesntHave(
             'persons',
