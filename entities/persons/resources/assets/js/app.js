@@ -4,9 +4,9 @@ require('../../../../../../widgets/entities/widgets/resources/assets/js/mixins/w
 
 require('./stores/persons');
 
-Vue.component(
+window.Vue.component(
     'PersonWidget',
-    require('./components/partials/PersonWidget/PersonWidget.vue').default,
+    () => import('./components/partials/PersonWidget/PersonWidget.vue'),
 );
 
 let persons = require('./package/persons');

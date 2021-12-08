@@ -1,4 +1,7 @@
-window.Admin.vue.stores['persons-package_persons'] = new Vuex.Store({
+import hash from 'object-hash';
+import { v4 as uuidv4 } from 'uuid';
+
+window.Admin.vue.stores['persons-package_persons'] = new window.Vuex.Store({
   state: {
     emptyPerson: {
       model: {
@@ -21,10 +24,10 @@ window.Admin.vue.stores['persons-package_persons'] = new Vuex.Store({
   mutations: {
     setPerson(state, person) {
       let emptyPerson = JSON.parse(JSON.stringify(state.emptyPerson));
-      emptyPerson.model.id = UUID.generate();
+      emptyPerson.model.id = uuidv4();
 
       let resultPerson = _.merge(emptyPerson, person);
-      resultPerson.hash = window.hash(resultPerson.model);
+      resultPerson.hash = hash(resultPerson.model);
 
       state.person = resultPerson;
     },
