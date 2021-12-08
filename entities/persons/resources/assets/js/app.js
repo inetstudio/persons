@@ -1,3 +1,5 @@
+import {persons} from './package/persons';
+
 require('./plugins/tinymce/plugins/persons');
 
 require('../../../../../../widgets/entities/widgets/resources/assets/js/mixins/widget');
@@ -9,5 +11,4 @@ window.Vue.component(
     () => import('./components/partials/PersonWidget/PersonWidget.vue'),
 );
 
-let persons = require('./package/persons');
 persons.init();

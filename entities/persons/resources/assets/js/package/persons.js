@@ -1,6 +1,5 @@
-let persons = {};
+export let persons = {
+  init: function () {
 
-persons.init = function() {
+  }
 };
-
-module.exports = persons;
