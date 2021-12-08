@@ -51,11 +51,13 @@ class ItemsService extends BaseService implements ItemsServiceContract
         app()->make('InetStudio\Classifiers\Entries\Contracts\Services\Back\ItemsServiceContract')
             ->attachToObject($classifiersData, $item);
 
-        $images = (config('persons.images.conversions.person')) ? array_keys(
-            config('persons.images.conversions.person')
-        ) : [];
-        app()->make('InetStudio\Uploads\Contracts\Services\Back\ImagesServiceContract')
-            ->attachToObject(request(), $item, $images, 'persons', 'person');
+        resolve(
+            'InetStudio\UploadsPackage\Uploads\Contracts\Actions\AttachMediaToObjectActionContract',
+            [
+                'item' => $item,
+                'media' => Arr::get($data, 'media', []),
+            ]
+        )->execute();
 
         $item->searchable();
 

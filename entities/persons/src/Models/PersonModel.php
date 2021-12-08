@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use InetStudio\ACL\Users\Models\Traits\HasUser;
-use InetStudio\Uploads\Models\Traits\HasImages;
+use InetStudio\UploadsPackage\Uploads\Models\Traits\HasMedia;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use InetStudio\MetaPackage\Meta\Models\Traits\HasMeta;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
@@ -28,7 +28,7 @@ class PersonModel extends Model implements PersonModelContract
     use HasUser;
     use HasMeta;
     use Auditable;
-    use HasImages;
+    use HasMedia;
     use Sluggable;
     use Searchable;
     use SoftDeletes;
@@ -49,16 +49,6 @@ class PersonModel extends Model implements PersonModelContract
      * @var bool
      */
     protected $auditTimestamps = true;
-
-    /**
-     * Настройки для генерации изображений.
-     *
-     * @var array
-     */
-    protected $images = [
-        'config' => 'persons',
-        'model' => 'person',
-    ];
 
     /**
      * Связанная с моделью таблица.
@@ -307,5 +297,10 @@ class PersonModel extends Model implements PersonModelContract
         $engine->addRules($rules);
 
         return $engine;
+    }
+
+    public function getMediaConfig(): array
+    {
+        return config('persons.media', []);
     }
 }

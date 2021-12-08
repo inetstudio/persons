@@ -3,7 +3,7 @@
 namespace InetStudio\PersonsPackage\Persons\Http\Requests\Back;
 
 use Illuminate\Foundation\Http\FormRequest;
-use InetStudio\Uploads\Validation\Rules\CropSize;
+use InetStudio\UploadsPackage\Uploads\Validation\Rules\CropSize;
 use InetStudio\PersonsPackage\Persons\Contracts\Http\Requests\Back\SaveItemRequestContract;
 
 /**
